@@ -21,7 +21,7 @@ final class MainViewController: UIViewController {
         let clearButton = UIButton(type: .custom)
         clearButton.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
         clearButton.tintColor = .systemGray
-        clearButton.frame = CGRect(x: 0, y: 0, width: 18, height: 18)
+        clearButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
         clearButton.addTarget(self, action: #selector(clearButtonTapped), for: .touchUpInside)
         
         textField.rightView = clearButton
@@ -54,7 +54,7 @@ final class MainViewController: UIViewController {
         view.addSubview(tableView)
         view.addLayoutGuide(bottomMarginGuide)
         searchTextField.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(0)
             make.leading.equalTo(view).offset(20)
             make.trailing.equalTo(searchButton.snp.leading).offset(-20)
         }
@@ -69,7 +69,7 @@ final class MainViewController: UIViewController {
         }
         bottomMarginGuide.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalTo(view)
-            make.height.equalTo(80)
+            make.height.equalTo(90)
         }
     }
     // delegates
@@ -142,59 +142,4 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.text = "\(movie.trackName) by \(movie.artistName)"
         return cell
     }
-}
-//MARK: - fetch
-class MovieSearchService {
-    static let shared = MovieSearchService()
-    
-    private init() {}
-    
-    func searchMovies(withQuery query: String, completion: @escaping ([Movie]?, Error?) -> Void) {
-        guard let url = buildURL(withQuery: query) else {
-            completion(nil, NSError(domain: "Invalid URL", code: 0, userInfo: nil))
-            return
-        }
-        
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if let error = error {
-                completion(nil, error)
-                return
-            }
-            
-            guard let data = data else {
-                completion(nil, NSError(domain: "No data received", code: 0, userInfo: nil))
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let result = try decoder.decode(MovieSearchResult.self, from: data)
-                completion(result.results, nil)
-            } catch {
-                completion(nil, error)
-            }
-        }
-        
-        task.resume()
-    }
-    
-    private func buildURL(withQuery query: String) -> URL? {
-        let baseURL = "https://itunes.apple.com/search"
-        let mediaType = "movie"
-        let parameters = ["media": mediaType, "term": query]
-        
-        var components = URLComponents(string: baseURL)
-        components?.queryItems = parameters.map { URLQueryItem(name: $0.key, value: $0.value) }
-        
-        return components?.url
-    }
-}
-//MARK: - Struct
-struct Movie: Codable {
-    let trackName: String
-    let artistName: String
-}
-
-struct MovieSearchResult: Codable {
-    let results: [Movie]
 }
