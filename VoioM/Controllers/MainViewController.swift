@@ -35,7 +35,8 @@ final class MainViewController: UIViewController {
     }()
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: "MovieCell")
         return tableView
     }()
     private let bottomMarginGuide = UILayoutGuide() // нижняя граница
@@ -136,10 +137,20 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         return movies.count
     }
     
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+//        let movie = movies[indexPath.row]
+//        cell.textLabel?.text = "\(movie.trackName) by \(movie.artistName)"
+//        return cell
+//    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as? MovieTableViewCell else {
+            return UITableViewCell()
+        }
+
         let movie = movies[indexPath.row]
-        cell.textLabel?.text = "\(movie.trackName) by \(movie.artistName)"
+        cell.configure(with: movie)
+
         return cell
     }
 }
