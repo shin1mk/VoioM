@@ -5,4 +5,13 @@
 //  Created by SHIN MIKHAIL on 17.12.2023.
 //
 
-import Foundation
+import UIKit
+import SnapKit
+
+final class ProfileViewController: UIViewController {
+    //MARK: Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemGreen
+    }
+}

@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		134716042B2F364B0014BCB6 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 134716032B2F364B0014BCB6 /* SnapKit */; };
 		134716062B2F364B0014BCB6 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 134716052B2F364B0014BCB6 /* SnapKit-Dynamic */; };
+		1372E3282B2F8F6F001BDF0E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1372E3272B2F8F6F001BDF0E /* MainViewController.swift */; };
+		1372E32A2B2F8FB3001BDF0E /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1372E3292B2F8FB3001BDF0E /* FavoritesViewController.swift */; };
+		1372E32C2B2F8FD5001BDF0E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1372E32B2B2F8FD5001BDF0E /* ProfileViewController.swift */; };
 		138386272B2F178500FAB406 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138386262B2F178500FAB406 /* AppDelegate.swift */; };
 		138386292B2F178500FAB406 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138386282B2F178500FAB406 /* SceneDelegate.swift */; };
 		1383862B2B2F178500FAB406 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1383862A2B2F178500FAB406 /* MainTabBarController.swift */; };
@@ -19,6 +22,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1372E3272B2F8F6F001BDF0E /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		1372E3292B2F8FB3001BDF0E /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		1372E32B2B2F8FD5001BDF0E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		138386232B2F178500FAB406 /* VoioM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoioM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		138386262B2F178500FAB406 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		138386282B2F178500FAB406 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -89,6 +95,9 @@
 			children = (
 				1383862A2B2F178500FAB406 /* MainTabBarController.swift */,
 				138386412B2F1CDD00FAB406 /* LoginViewController.swift */,
+				1372E3272B2F8F6F001BDF0E /* MainViewController.swift */,
+				1372E3292B2F8FB3001BDF0E /* FavoritesViewController.swift */,
+				1372E32B2B2F8FD5001BDF0E /* ProfileViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -231,8 +240,11 @@
 			files = (
 				138386312B2F178500FAB406 /* VoioM.xcdatamodeld in Sources */,
 				1383862B2B2F178500FAB406 /* MainTabBarController.swift in Sources */,
+				1372E32A2B2F8FB3001BDF0E /* FavoritesViewController.swift in Sources */,
 				138386272B2F178500FAB406 /* AppDelegate.swift in Sources */,
+				1372E3282B2F8F6F001BDF0E /* MainViewController.swift in Sources */,
 				138386422B2F1CDD00FAB406 /* LoginViewController.swift in Sources */,
+				1372E32C2B2F8FD5001BDF0E /* ProfileViewController.swift in Sources */,
 				138386292B2F178500FAB406 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -156,14 +156,41 @@ final class LoginViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
+//    private func showMainTabViewController() {
+//        let mainTabBarController = MainTabBarController()
+//        
+//        let firstViewController = UIViewController()
+//        firstViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 0)
+//        
+//        mainTabBarController.setViewControllers([firstViewController], animated: false)
+//        
+//        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+//           let windowDelegate = windowScene.delegate as? SceneDelegate,
+//           let window = windowDelegate.window {
+//            
+//            animateTransition(to: mainTabBarController, in: window)
+//        }
+//    }
     // show main tab vc
     private func showMainTabViewController() {
-        let mainTabBarController = MainTabBarController()
+        let mainTabBarController = UITabBarController()
         
-        let firstViewController = UIViewController()
-        firstViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 0)
+        let firstViewController = generateVC(
+            viewController: MainViewController(),
+            title: "Main",
+            image: UIImage(systemName: "play.house.fill"))
         
-        mainTabBarController.setViewControllers([firstViewController], animated: false)
+        let secondViewController = generateVC(
+            viewController: FavoritesViewController(),
+            title: "Favorites",
+            image: UIImage(systemName: "star.fill"))
+        
+        let thirdViewController = generateVC(
+            viewController: ProfileViewController(),
+            title: "Profile",
+            image: UIImage(systemName: "person.fill"))
+        
+        mainTabBarController.setViewControllers([firstViewController, secondViewController, thirdViewController], animated: false)
         
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
            let windowDelegate = windowScene.delegate as? SceneDelegate,
@@ -171,6 +198,13 @@ final class LoginViewController: UIViewController {
             
             animateTransition(to: mainTabBarController, in: window)
         }
+    }
+    
+    private func generateVC(viewController: UIViewController, title: String, image: UIImage?) -> UIViewController {
+        let navigationController = UINavigationController(rootViewController: viewController)
+        navigationController.tabBarItem.title = title
+        navigationController.tabBarItem.image = image
+        return navigationController
     }
     // animation
     private func animateTransition(to viewController: UIViewController, in window: UIWindow) {
