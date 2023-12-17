@@ -1,0 +1,6 @@
+framework module Pods_VoioM {
+  umbrella header "Pods-VoioM-umbrella.h"
+
+  export *
+  module * { export * }
+}

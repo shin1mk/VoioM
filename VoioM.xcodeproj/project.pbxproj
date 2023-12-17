@@ -7,25 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		134716042B2F364B0014BCB6 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 134716032B2F364B0014BCB6 /* SnapKit */; };
+		134716062B2F364B0014BCB6 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 134716052B2F364B0014BCB6 /* SnapKit-Dynamic */; };
 		138386272B2F178500FAB406 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138386262B2F178500FAB406 /* AppDelegate.swift */; };
 		138386292B2F178500FAB406 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138386282B2F178500FAB406 /* SceneDelegate.swift */; };
-		1383862B2B2F178500FAB406 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1383862A2B2F178500FAB406 /* ViewController.swift */; };
-		1383862E2B2F178500FAB406 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1383862C2B2F178500FAB406 /* Main.storyboard */; };
+		1383862B2B2F178500FAB406 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1383862A2B2F178500FAB406 /* MainTabBarController.swift */; };
 		138386312B2F178500FAB406 /* VoioM.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1383862F2B2F178500FAB406 /* VoioM.xcdatamodeld */; };
 		138386332B2F178600FAB406 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 138386322B2F178600FAB406 /* Assets.xcassets */; };
-		138386362B2F178600FAB406 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 138386342B2F178600FAB406 /* LaunchScreen.storyboard */; };
+		138386422B2F1CDD00FAB406 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138386412B2F1CDD00FAB406 /* LoginViewController.swift */; };
+		1B0F0132BAA0EE0FFD357A18 /* Pods_VoioM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 595896A29E9E35CA0917E81B /* Pods_VoioM.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		138386232B2F178500FAB406 /* VoioM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoioM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		138386262B2F178500FAB406 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		138386282B2F178500FAB406 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		1383862A2B2F178500FAB406 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		1383862D2B2F178500FAB406 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1383862A2B2F178500FAB406 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		138386302B2F178500FAB406 /* VoioM.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VoioM.xcdatamodel; sourceTree = "<group>"; };
 		138386322B2F178600FAB406 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		138386352B2F178600FAB406 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		138386372B2F178600FAB406 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		138386412B2F1CDD00FAB406 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		3D1C99D961B37BB77E8281B8 /* Pods-VoioM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VoioM.debug.xcconfig"; path = "Target Support Files/Pods-VoioM/Pods-VoioM.debug.xcconfig"; sourceTree = "<group>"; };
+		595896A29E9E35CA0917E81B /* Pods_VoioM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VoioM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7994FF34FDEDEF45483BFAC /* Pods-VoioM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VoioM.release.xcconfig"; path = "Target Support Files/Pods-VoioM/Pods-VoioM.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +37,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B0F0132BAA0EE0FFD357A18 /* Pods_VoioM.framework in Frameworks */,
+				134716042B2F364B0014BCB6 /* SnapKit in Frameworks */,
+				134716062B2F364B0014BCB6 /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +51,8 @@
 			children = (
 				138386252B2F178500FAB406 /* VoioM */,
 				138386242B2F178500FAB406 /* Products */,
+				AAD032E03BE3639558F3EA75 /* Pods */,
+				55A1188F40233A0CE01BF8F1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,16 +67,64 @@
 		138386252B2F178500FAB406 /* VoioM */ = {
 			isa = PBXGroup;
 			children = (
-				138386262B2F178500FAB406 /* AppDelegate.swift */,
-				138386282B2F178500FAB406 /* SceneDelegate.swift */,
-				1383862A2B2F178500FAB406 /* ViewController.swift */,
-				1383862C2B2F178500FAB406 /* Main.storyboard */,
-				138386322B2F178600FAB406 /* Assets.xcassets */,
-				138386342B2F178600FAB406 /* LaunchScreen.storyboard */,
-				138386372B2F178600FAB406 /* Info.plist */,
-				1383862F2B2F178500FAB406 /* VoioM.xcdatamodeld */,
+				138386402B2F196400FAB406 /* CoreData */,
+				1383863F2B2F194B00FAB406 /* Application */,
+				1383863E2B2F193F00FAB406 /* Controllers */,
+				1383863D2B2F192800FAB406 /* Resources */,
 			);
 			path = VoioM;
+			sourceTree = "<group>";
+		};
+		1383863D2B2F192800FAB406 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				138386322B2F178600FAB406 /* Assets.xcassets */,
+				138386372B2F178600FAB406 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		1383863E2B2F193F00FAB406 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				1383862A2B2F178500FAB406 /* MainTabBarController.swift */,
+				138386412B2F1CDD00FAB406 /* LoginViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		1383863F2B2F194B00FAB406 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				138386262B2F178500FAB406 /* AppDelegate.swift */,
+				138386282B2F178500FAB406 /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		138386402B2F196400FAB406 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				1383862F2B2F178500FAB406 /* VoioM.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		55A1188F40233A0CE01BF8F1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				595896A29E9E35CA0917E81B /* Pods_VoioM.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AAD032E03BE3639558F3EA75 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3D1C99D961B37BB77E8281B8 /* Pods-VoioM.debug.xcconfig */,
+				A7994FF34FDEDEF45483BFAC /* Pods-VoioM.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -77,6 +134,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1383863A2B2F178600FAB406 /* Build configuration list for PBXNativeTarget "VoioM" */;
 			buildPhases = (
+				67799EDB12F8FCC7151C2D32 /* [CP] Check Pods Manifest.lock */,
 				1383861F2B2F178500FAB406 /* Sources */,
 				138386202B2F178500FAB406 /* Frameworks */,
 				138386212B2F178500FAB406 /* Resources */,
@@ -86,6 +144,10 @@
 			dependencies = (
 			);
 			name = VoioM;
+			packageProductDependencies = (
+				134716032B2F364B0014BCB6 /* SnapKit */,
+				134716052B2F364B0014BCB6 /* SnapKit-Dynamic */,
+			);
 			productName = VoioM;
 			productReference = 138386232B2F178500FAB406 /* VoioM.app */;
 			productType = "com.apple.product-type.application";
@@ -114,6 +176,9 @@
 				Base,
 			);
 			mainGroup = 1383861A2B2F178500FAB406;
+			packageReferences = (
+				134716022B2F364B0014BCB6 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 138386242B2F178500FAB406 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -128,13 +193,36 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				138386362B2F178600FAB406 /* LaunchScreen.storyboard in Resources */,
 				138386332B2F178600FAB406 /* Assets.xcassets in Resources */,
-				1383862E2B2F178500FAB406 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		67799EDB12F8FCC7151C2D32 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VoioM-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1383861F2B2F178500FAB406 /* Sources */ = {
@@ -142,32 +230,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				138386312B2F178500FAB406 /* VoioM.xcdatamodeld in Sources */,
-				1383862B2B2F178500FAB406 /* ViewController.swift in Sources */,
+				1383862B2B2F178500FAB406 /* MainTabBarController.swift in Sources */,
 				138386272B2F178500FAB406 /* AppDelegate.swift in Sources */,
+				138386422B2F1CDD00FAB406 /* LoginViewController.swift in Sources */,
 				138386292B2F178500FAB406 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		1383862C2B2F178500FAB406 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1383862D2B2F178500FAB406 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		138386342B2F178600FAB406 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				138386352B2F178600FAB406 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		138386382B2F178600FAB406 /* Debug */ = {
@@ -291,6 +361,7 @@
 		};
 		1383863B2B2F178600FAB406 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3D1C99D961B37BB77E8281B8 /* Pods-VoioM.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -298,12 +369,15 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5F8NF33WRR;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = VoioM/Info.plist;
+				INFOPLIST_FILE = VoioM/Resources/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -311,14 +385,18 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = code.VoioM;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		1383863C2B2F178600FAB406 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A7994FF34FDEDEF45483BFAC /* Pods-VoioM.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -326,12 +404,15 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5F8NF33WRR;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = VoioM/Info.plist;
+				INFOPLIST_FILE = VoioM/Resources/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -339,9 +420,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = code.VoioM;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -367,6 +451,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		134716022B2F364B0014BCB6 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		134716032B2F364B0014BCB6 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 134716022B2F364B0014BCB6 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		134716052B2F364B0014BCB6 /* SnapKit-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 134716022B2F364B0014BCB6 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = "SnapKit-Dynamic";
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		1383862F2B2F178500FAB406 /* VoioM.xcdatamodeld */ = {
