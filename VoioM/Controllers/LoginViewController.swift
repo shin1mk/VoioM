@@ -177,8 +177,8 @@ final class LoginViewController: UIViewController {
         
         let firstViewController = generateVC(
             viewController: MainViewController(),
-            title: "Main",
-            image: UIImage(systemName: "play.house.fill"))
+            title: "Home",
+            image: UIImage(systemName: "house.fill"))
         
         let secondViewController = generateVC(
             viewController: FavoritesViewController(),
