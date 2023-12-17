@@ -40,6 +40,12 @@ final class LoginViewController: UIViewController {
         button.layer.cornerRadius = 5.0
         return button
     }()
+    private let infoButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "questionmark.bubble"), for: .normal)
+        button.tintColor = .systemBlue
+        return button
+    }()
     //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,31 +54,42 @@ final class LoginViewController: UIViewController {
     // вошел в аккаунт или нет
     private func checkUserLoginStatus() {
         if isUserLoggedIn() {
-            // Если пользователь уже вошел, открываем MainTabBarController
             showMainTabViewController()
         } else {
-            // Если пользователь не вошел, показываем экран ввода данных
             setupConstraints()
             setupTarget()
+            setupDelegate()
         }
     }
     // вошел ли ранее пользователь?
     private func isUserLoggedIn() -> Bool {
         return UserDefaults.standard.bool(forKey: "isUserLoggedIn")
     }
-    
+    // save log
     private func setLoggedIn() {
         UserDefaults.standard.set(true, forKey: "isUserLoggedIn")
         UserDefaults.standard.synchronize()
     }
     // targets
     private func setupTarget() {
+        infoButton.addTarget(self, action: #selector(infoButtonTapped), for: .touchUpInside)
         loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         registerButton.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
+    }
+    // delegates
+    private func setupDelegate() {
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
     }
     //Constraints
     private func setupConstraints() {
         view.backgroundColor = .white
+        view.addSubview(infoButton)
+        infoButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(15)
+            make.leading.equalTo(view).offset(20)
+            make.height.equalTo(40)
+        }
         view.addSubview(emailTextField)
         emailTextField.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(50)
@@ -97,6 +114,14 @@ final class LoginViewController: UIViewController {
             make.height.equalTo(40)
         }
     }
+    // info button
+    @objc private func infoButtonTapped() {
+        let alert = UIAlertController(title: "Enter this data 😎",
+                                      message: "email: 123@gmail.com \npassword: qwerty",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
     // login button
     @objc private func loginButtonTapped() {
         guard let email = emailTextField.text, !email.isEmpty,
@@ -104,7 +129,7 @@ final class LoginViewController: UIViewController {
             showAlertError(message: "Please enter email and password.")
             return
         }
-        if email == "1@gmail.com" && password == "qwerty" {
+        if email == "123@gmail.com" && password == "qwerty" {
             // Успешный вход
             setLoggedIn()
             print("okay")
@@ -113,40 +138,60 @@ final class LoginViewController: UIViewController {
             showAlertError(message: "Invalid email or password.")
         }
     }
-    //error alert
+    // error alert
     private func showAlertError(message: String) {
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: "Error 🤬",
+                                      message: message,
+                                      preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
     // register button
     @objc private func registerButtonTapped() {
-        let alert = UIAlertController(title: "Введи эти данные", 
-                                      message: "email: 1@gmail.com \npassword: qwerty",
+        let alert = UIAlertController(title: "Register",
+                                      message: "not available 🥲",
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
-
+    // show main tab vc
     private func showMainTabViewController() {
         let mainTabBarController = MainTabBarController()
-
-        // Здесь вы можете создать и добавить ваши вкладки (Tab) к mainTabBarController
-
-        // Пример:
+        
         let firstViewController = UIViewController()
         firstViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 0)
-
-        let secondViewController = UIViewController()
-        secondViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 1)
-
-        mainTabBarController.setViewControllers([firstViewController, secondViewController], animated: false)
-
-        // Переключимся на главный UITabBarController
+        
+        mainTabBarController.setViewControllers([firstViewController], animated: false)
+        
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
            let windowDelegate = windowScene.delegate as? SceneDelegate,
            let window = windowDelegate.window {
-            window.rootViewController = mainTabBarController
+            
+            animateTransition(to: mainTabBarController, in: window)
         }
     }
+    // animation
+    private func animateTransition(to viewController: UIViewController, in window: UIWindow) {
+        UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: {
+            window.rootViewController = viewController
+        }, completion: nil)
+    }
 } // end
+//MARK: - maxLength textField
+extension LoginViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == emailTextField {
+            let maxLength = 20
+            let currentString = textField.text ?? ""
+            let newLength = currentString.count + string.count - range.length
+            return newLength <= maxLength
+        }
+        if textField == passwordTextField {
+            let maxLength = 20
+            let currentString = textField.text ?? ""
+            let newLength = currentString.count + string.count - range.length
+            return newLength <= maxLength
+        }
+        return true
+    }
+}
