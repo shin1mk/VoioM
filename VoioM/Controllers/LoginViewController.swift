@@ -15,6 +15,7 @@ final class LoginViewController: UIViewController {
         let textField = UITextField()
         textField.placeholder = "Enter your e-mail"
         textField.borderStyle = .roundedRect
+        textField.keyboardType = .emailAddress
         return textField
     }()
     private let passwordTextField: UITextField = {
@@ -22,6 +23,7 @@ final class LoginViewController: UIViewController {
         textField.placeholder = "Enter your password"
         textField.isSecureTextEntry = true
         textField.borderStyle = .roundedRect
+        textField.returnKeyType = .done
         return textField
     }()
     private let loginButton: UIButton = {
@@ -191,6 +193,17 @@ extension LoginViewController: UITextFieldDelegate {
             let currentString = textField.text ?? ""
             let newLength = currentString.count + string.count - range.length
             return newLength <= maxLength
+        }
+        return true
+    }
+    // return swith to password.password swith to login
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == emailTextField {
+            // Если вводится email, переходим к полю ввода пароля
+            passwordTextField.becomeFirstResponder()
+        } else if textField == passwordTextField {
+            // Если вводится пароль, переключаем на кнопку Login
+            loginButtonTapped()
         }
         return true
     }
