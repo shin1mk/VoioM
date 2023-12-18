@@ -52,14 +52,11 @@ final class MovieTableViewCell: UITableViewCell {
         coverImageView.snp.makeConstraints { make in
             make.top.leading.bottom.equalTo(contentView).inset(8)
             make.width.equalTo(80)
-//            make.height.equalTo(110)
-
         }
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView).offset(5)
             make.leading.equalTo(coverImageView.snp.trailing).offset(8)
             make.trailing.equalTo(contentView).offset(-8)
-//            make.height.equalTo(45)
         }
         yearLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(4)
@@ -71,7 +68,6 @@ final class MovieTableViewCell: UITableViewCell {
             make.leading.equalTo(titleLabel)
             make.bottom.equalTo(contentView).offset(-8)
             make.height.equalTo(15)
-
         }
     }
     // показываем содержимое
