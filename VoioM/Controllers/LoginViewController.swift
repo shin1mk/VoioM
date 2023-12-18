@@ -161,7 +161,7 @@ final class LoginViewController: UIViewController {
         let mainTabBarController = UITabBarController()
         
         let firstViewController = generateVC(
-            viewController: MainViewController(),
+            viewController: HomeViewController(),
             title: "Home",
             image: UIImage(systemName: "house.fill"))
         

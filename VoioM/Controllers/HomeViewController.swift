@@ -11,7 +11,6 @@ import Foundation
 
 final class HomeViewController: UIViewController {
     private let movieSearchService = MovieSearchService.shared // загрузка по умолчанию
-
     private var movies: [Movie] = [] // Массив для хранения фильмов
     //MARK: Properties
     private lazy var searchTextField: UITextField = {

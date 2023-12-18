@@ -51,7 +51,6 @@ final class MovieSearchService {
                 let decoder = JSONDecoder()
                 let result = try decoder.decode(MovieSearchResult.self, from: data)
 //                print("Decoded result: \(result)")
-
                 var moviesWithDescriptions = result.results
                 // change date format
                 let dateFormatter = DateFormatter()

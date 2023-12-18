@@ -21,7 +21,6 @@ final class MovieTableViewCell: UITableViewCell {
         label.numberOfLines = 0
         label.textAlignment = .left
         label.contentMode = .top
-
         return label
     }()
     private let yearLabel: UILabel = {
