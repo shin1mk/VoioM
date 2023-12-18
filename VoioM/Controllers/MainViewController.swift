@@ -136,13 +136,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return movies.count
     }
-    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-//        let movie = movies[indexPath.row]
-//        cell.textLabel?.text = "\(movie.trackName) by \(movie.artistName)"
-//        return cell
-//    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as? MovieTableViewCell else {
             return UITableViewCell()
@@ -152,5 +146,16 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         cell.configure(with: movie)
 
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedMovie = movies[indexPath.row]
+        showMovieDetails(for: selectedMovie)
+    }
+
+    // Добавьте метод для отображения детальной информации о фильме
+    private func showMovieDetails(for movie: Movie) {
+        let movieDetailViewController = MovieDetailViewController(movie: movie)
+        navigationController?.pushViewController(movieDetailViewController, animated: true)
     }
 }

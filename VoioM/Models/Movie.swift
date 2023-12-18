@@ -24,6 +24,8 @@ struct Movie: Codable {
     let artworkUrl100: String // URL обложки
     let releaseDate: String // Год
     let primaryGenreName: String // Жанр
+    var longDescription: String? // Описание фильма
+
     
     enum CodingKeys: String, CodingKey {
         case trackName
@@ -31,6 +33,8 @@ struct Movie: Codable {
         case artworkUrl100
         case releaseDate
         case primaryGenreName
+        case longDescription
+
     }
 }
 

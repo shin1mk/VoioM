@@ -12,6 +12,7 @@
 		1372E3282B2F8F6F001BDF0E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1372E3272B2F8F6F001BDF0E /* MainViewController.swift */; };
 		1372E32A2B2F8FB3001BDF0E /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1372E3292B2F8FB3001BDF0E /* FavoritesViewController.swift */; };
 		1372E32C2B2F8FD5001BDF0E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1372E32B2B2F8FD5001BDF0E /* ProfileViewController.swift */; };
+		13784EBD2B302B2D007D03F4 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13784EBC2B302B2D007D03F4 /* MovieDetailViewController.swift */; };
 		138386272B2F178500FAB406 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138386262B2F178500FAB406 /* AppDelegate.swift */; };
 		138386292B2F178500FAB406 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138386282B2F178500FAB406 /* SceneDelegate.swift */; };
 		1383862B2B2F178500FAB406 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1383862A2B2F178500FAB406 /* MainTabBarController.swift */; };
@@ -28,6 +29,7 @@
 		1372E3272B2F8F6F001BDF0E /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		1372E3292B2F8FB3001BDF0E /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		1372E32B2B2F8FD5001BDF0E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		13784EBC2B302B2D007D03F4 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		138386232B2F178500FAB406 /* VoioM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoioM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		138386262B2F178500FAB406 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		138386282B2F178500FAB406 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				1372E3272B2F8F6F001BDF0E /* MainViewController.swift */,
 				1372E3292B2F8FB3001BDF0E /* FavoritesViewController.swift */,
 				1372E32B2B2F8FD5001BDF0E /* ProfileViewController.swift */,
+				13784EBC2B302B2D007D03F4 /* MovieDetailViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -275,6 +278,7 @@
 				1383862B2B2F178500FAB406 /* MainTabBarController.swift in Sources */,
 				13B1EBC22B2FA8630035E37D /* MovieSearchService.swift in Sources */,
 				13B1EBBF2B2FA81D0035E37D /* Movie.swift in Sources */,
+				13784EBD2B302B2D007D03F4 /* MovieDetailViewController.swift in Sources */,
 				1372E32A2B2F8FB3001BDF0E /* FavoritesViewController.swift in Sources */,
 				138386272B2F178500FAB406 /* AppDelegate.swift in Sources */,
 				13A6DD612B2FAB0600AFF2F4 /* MovieTableViewCell.swift in Sources */,
