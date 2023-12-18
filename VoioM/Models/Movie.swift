@@ -22,7 +22,7 @@ struct Movie: Codable {
     let trackName: String
     let artistName: String
     let artworkUrl100: String // URL обложки
-    let releaseDate: String // Год
+    var releaseDate: String // Год
     let primaryGenreName: String // Жанр
     var longDescription: String? // Описание фильма
 

@@ -25,41 +25,6 @@ class MovieSearchService {
         return url
     }
 
-//    func searchMovies(withQuery query: String, completion: @escaping ([Movie]?, Error?) -> Void) {
-//        guard let url = buildURL(withQuery: query) else {
-//            let error = NSError(domain: "Invalid URL", code: 0, userInfo: nil)
-//            print("Error building URL: \(error)")
-//            completion(nil, error)
-//            return
-//        }
-//        
-//        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-//            if let error = error {
-//                print("URL Session Error: \(error)")
-//                completion(nil, error)
-//                return
-//            }
-//            
-//            guard let data = data else {
-//                let error = NSError(domain: "No data received", code: 0, userInfo: nil)
-//                print("No data received. Error: \(error)")
-//                completion(nil, error)
-//                return
-//            }
-//            
-//            do {
-//                let decoder = JSONDecoder()
-//                let result = try decoder.decode(MovieSearchResult.self, from: data)
-//                print("Decoded result: \(result)")
-//                completion(result.results, nil)
-//            } catch {
-//                print("Decoding error: \(error)")
-//                completion(nil, error)
-//            }
-//        }
-//        
-//        task.resume()
-//    }
     func searchMovies(withQuery query: String, completion: @escaping ([Movie]?, Error?) -> Void) {
         guard let url = buildURL(withQuery: query) else {
             let error = NSError(domain: "Invalid URL", code: 0, userInfo: nil)
@@ -88,10 +53,16 @@ class MovieSearchService {
                 print("Decoded result: \(result)")
 
                 var moviesWithDescriptions = result.results
-                // get description movie
+                // Обновляем формат даты релиза
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+
                 for (index, movie) in moviesWithDescriptions.enumerated() {
-                    // Здесь предполагается, что API возвращает описание для каждого фильма в поле longDescription
-                    moviesWithDescriptions[index].longDescription = movie.longDescription ?? "No description available."
+                    if let date = dateFormatter.date(from: movie.releaseDate) {
+                        let newDateFormat = DateFormatter()
+                        newDateFormat.dateFormat = "yyyy-MM-dd"
+                        moviesWithDescriptions[index].releaseDate = newDateFormat.string(from: date)
+                    }
                 }
 
                 completion(moviesWithDescriptions, nil)
@@ -103,5 +74,6 @@ class MovieSearchService {
 
         task.resume()
     }
+
 
 }
