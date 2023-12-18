@@ -10,6 +10,8 @@ import SnapKit
 import Foundation
 
 final class MainViewController: UIViewController {
+    private let movieSearchService = MovieSearchService.shared // загрузка по умолчанию
+
     private var movies: [Movie] = [] // Массив для хранения фильмов
     //MARK: Properties
     private lazy var searchTextField: UITextField = {
@@ -35,7 +37,6 @@ final class MainViewController: UIViewController {
     }()
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
-//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: "MovieCell")
         return tableView
     }()
@@ -46,8 +47,25 @@ final class MainViewController: UIViewController {
         setupConstraints()
         setupDelegates()
         setupTarget()
+        loadChristmasMovies()
     }
- 
+    // загружаем фильмы по умолчанию
+    private func loadChristmasMovies() {
+        let christmasQuery = "Christmas"
+        movieSearchService.searchMovies(withQuery: christmasQuery) { [weak self] (movies, error) in
+            if let error = error {
+                print("Error loading Christmas movies: \(error.localizedDescription)")
+                return
+            }
+            if let movies = movies {
+                self?.movies = movies // update massiv
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData() // reload table
+                }
+            }
+        }
+    }
+    // constraints
     private func setupConstraints() {
         view.backgroundColor = .white
         view.addSubview(searchTextField)
@@ -107,13 +125,10 @@ final class MainViewController: UIViewController {
                 print("Error searching movies: \(error.localizedDescription)")
                 return
             }
-            
             if let movies = movies {
-                // Обновляем массив с найденными фильмами
-                self?.movies = movies
-                // Обновляем таблицу на основе полученных данных
+                self?.movies = movies // update massive
                 DispatchQueue.main.async {
-                    self?.tableView.reloadData()
+                    self?.tableView.reloadData() // update table
                 }
             }
         }
@@ -122,10 +137,9 @@ final class MainViewController: UIViewController {
 //MARK: - UITextFieldDelegate
 extension MainViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        // Обработка события "Return" на клавиатуре
+        // if tapped "Return" => search
         textField.resignFirstResponder()
         if let query = textField.text, !query.isEmpty {
-            // Выполняем поиск только если введен непустой запрос
             searchMovies(query: query)
         }
         return true
@@ -133,10 +147,14 @@ extension MainViewController: UITextFieldDelegate {
 }
 //MARK: - UITableView
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100.0 // высота
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return movies.count
     }
-
+    // содержимое
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as? MovieTableViewCell else {
             return UITableViewCell()
@@ -147,13 +165,14 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 
         return cell
     }
-    
+    // нажата
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedMovie = movies[indexPath.row]
         showMovieDetails(for: selectedMovie)
-    }
+        tableView.deselectRow(at: indexPath, animated: true)
 
-    // Добавьте метод для отображения детальной информации о фильме
+    }
+    // открываем about
     private func showMovieDetails(for movie: Movie) {
         let movieDetailViewController = MovieDetailViewController(movie: movie)
         navigationController?.pushViewController(movieDetailViewController, animated: true)

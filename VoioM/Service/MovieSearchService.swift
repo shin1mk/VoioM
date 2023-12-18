@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MovieSearchService {
+final class MovieSearchService {
     static let shared = MovieSearchService()
     
     private init() {}
@@ -24,7 +24,7 @@ class MovieSearchService {
         print("Built URL: \(url?.absoluteString ?? "nil")")
         return url
     }
-
+    // search
     func searchMovies(withQuery query: String, completion: @escaping ([Movie]?, Error?) -> Void) {
         guard let url = buildURL(withQuery: query) else {
             let error = NSError(domain: "Invalid URL", code: 0, userInfo: nil)
@@ -50,30 +50,26 @@ class MovieSearchService {
             do {
                 let decoder = JSONDecoder()
                 let result = try decoder.decode(MovieSearchResult.self, from: data)
-                print("Decoded result: \(result)")
+//                print("Decoded result: \(result)")
 
                 var moviesWithDescriptions = result.results
-                // Обновляем формат даты релиза
+                // change date format
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
 
                 for (index, movie) in moviesWithDescriptions.enumerated() {
                     if let date = dateFormatter.date(from: movie.releaseDate) {
                         let newDateFormat = DateFormatter()
-                        newDateFormat.dateFormat = "yyyy-MM-dd"
+                        newDateFormat.dateFormat = "yyyy-MM-dd" // new format
                         moviesWithDescriptions[index].releaseDate = newDateFormat.string(from: date)
                     }
                 }
-
                 completion(moviesWithDescriptions, nil)
             } catch {
                 print("Decoding error: \(error)")
                 completion(nil, error)
             }
         }
-
         task.resume()
     }
-
-
-}
+} // end

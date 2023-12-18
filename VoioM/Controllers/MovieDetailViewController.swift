@@ -8,8 +8,9 @@
 import UIKit
 import SnapKit
 
-class MovieDetailViewController: UIViewController {
+final class MovieDetailViewController: UIViewController {
     private let movie: Movie
+    //MARK: Properties
     private let coverImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -39,7 +40,7 @@ class MovieDetailViewController: UIViewController {
         textView.isEditable = false
         return textView
     }()
-
+    // init
     init(movie: Movie) {
         self.movie = movie
         super.init(nibName: nil, bundle: nil)
@@ -48,54 +49,53 @@ class MovieDetailViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = movie.trackName
+        setMovieTitle()
         setupUI()
         populateUI()
+    }
+    // title 30 символов
+    private func setMovieTitle() {
+        let truncatedTitle = String(movie.trackName.prefix(30))
+        title = truncatedTitle
     }
     // constraints
     private func setupUI() {
         view.backgroundColor = .white
-
         view.addSubview(coverImageView)
         view.addSubview(titleLabel)
         view.addSubview(releaseDateLabel)
         view.addSubview(genreLabel)
         view.addSubview(descriptionTextView)
-
         coverImageView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(15)
             make.leading.equalTo(view).offset(15)
             make.width.equalTo(150)
             make.height.equalTo(200)
         }
-
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(coverImageView.snp.top)
             make.leading.equalTo(coverImageView.snp.trailing).offset(10)
             make.trailing.equalTo(view).inset(15)
         }
-
         releaseDateLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(8)
             make.leading.equalTo(titleLabel)
             make.trailing.equalTo(view).inset(15)
         }
-
         genreLabel.snp.makeConstraints { make in
             make.top.equalTo(releaseDateLabel.snp.bottom).offset(8)
             make.leading.equalTo(titleLabel)
             make.trailing.equalTo(view).inset(15)
         }
-
         descriptionTextView.snp.makeConstraints { make in
             make.top.equalTo(coverImageView.snp.bottom).offset(10)
             make.leading.trailing.bottom.equalTo(view).inset(15)
         }
     }
-    //
+    // load data
     private func populateUI() {
         titleLabel.text = movie.trackName
         releaseDateLabel.text = "Release Date: \(movie.releaseDate)"
@@ -112,4 +112,4 @@ class MovieDetailViewController: UIViewController {
             }.resume()
         }
     }
-}
+} // end 

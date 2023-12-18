@@ -156,22 +156,7 @@ final class LoginViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
-//    private func showMainTabViewController() {
-//        let mainTabBarController = MainTabBarController()
-//        
-//        let firstViewController = UIViewController()
-//        firstViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 0)
-//        
-//        mainTabBarController.setViewControllers([firstViewController], animated: false)
-//        
-//        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-//           let windowDelegate = windowScene.delegate as? SceneDelegate,
-//           let window = windowDelegate.window {
-//            
-//            animateTransition(to: mainTabBarController, in: window)
-//        }
-//    }
-    // show main tab vc
+    //MARK: - show main tab vc
     private func showMainTabViewController() {
         let mainTabBarController = UITabBarController()
         
@@ -199,7 +184,7 @@ final class LoginViewController: UIViewController {
             animateTransition(to: mainTabBarController, in: window)
         }
     }
-    
+    // create vc 
     private func generateVC(viewController: UIViewController, title: String, image: UIImage?) -> UIViewController {
         let navigationController = UINavigationController(rootViewController: viewController)
         navigationController.tabBarItem.title = title

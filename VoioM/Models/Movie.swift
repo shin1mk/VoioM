@@ -5,17 +5,6 @@
 //  Created by SHIN MIKHAIL on 18.12.2023.
 //
 
-//import Foundation
-////MARK: - Struct
-//struct Movie: Codable {
-//    let trackName: String
-//    let artistName: String
-//}
-//
-//struct MovieSearchResult: Codable {
-//    let results: [Movie]
-//}
-
 import Foundation
 
 struct Movie: Codable {
@@ -24,9 +13,8 @@ struct Movie: Codable {
     let artworkUrl100: String // URL обложки
     var releaseDate: String // Год
     let primaryGenreName: String // Жанр
-    var longDescription: String? // Описание фильма
+    var longDescription: String? // Описание
 
-    
     enum CodingKeys: String, CodingKey {
         case trackName
         case artistName
@@ -34,7 +22,6 @@ struct Movie: Codable {
         case releaseDate
         case primaryGenreName
         case longDescription
-
     }
 }
 
