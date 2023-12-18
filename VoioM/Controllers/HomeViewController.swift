@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Foundation
 
-final class MainViewController: UIViewController {
+final class HomeViewController: UIViewController {
     private let movieSearchService = MovieSearchService.shared // загрузка по умолчанию
 
     private var movies: [Movie] = [] // Массив для хранения фильмов
@@ -48,6 +48,7 @@ final class MainViewController: UIViewController {
         setupDelegates()
         setupTarget()
         loadChristmasMovies()
+        addTapGestureToDismissKeyboard()
     }
     // загружаем фильмы по умолчанию
     private func loadChristmasMovies() {
@@ -86,6 +87,7 @@ final class MainViewController: UIViewController {
             make.leading.trailing.equalTo(view)
             make.bottom.equalTo(bottomMarginGuide.snp.top)
         }
+        // нижняя граница
         bottomMarginGuide.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalTo(view)
             make.height.equalTo(90)
@@ -105,6 +107,7 @@ final class MainViewController: UIViewController {
     @objc private func clearButtonTapped() {
         searchTextField.text = ""
         clearTable()
+        loadChristmasMovies()
     }
     // clear table with x button
     private func clearTable() {
@@ -134,8 +137,20 @@ final class MainViewController: UIViewController {
         }
     }
 } // end
+//MARK: - keyboard
+extension HomeViewController {
+    private func addTapGestureToDismissKeyboard() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+
+    @objc private func handleTap() {
+        view.endEditing(true) // Закрываем клавиатуру
+    }
+}
 //MARK: - UITextFieldDelegate
-extension MainViewController: UITextFieldDelegate {
+extension HomeViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // if tapped "Return" => search
         textField.resignFirstResponder()
@@ -146,11 +161,12 @@ extension MainViewController: UITextFieldDelegate {
     }
 }
 //MARK: - UITableView
-extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    // высота
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100.0 // высота
+        return 95
     }
-
+    // кол-во
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return movies.count
     }
