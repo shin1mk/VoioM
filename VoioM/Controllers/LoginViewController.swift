@@ -52,16 +52,19 @@ final class LoginViewController: UIViewController {
     //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        checkUserLoginStatus()
+//        checkUserLoginStatus()
+        setupConstraints()
+        setupTarget()
+        setupDelegate()
     }
     // вошел в аккаунт или нет
     private func checkUserLoginStatus() {
         if isUserLoggedIn() {
             showMainTabViewController()
         } else {
-            setupConstraints()
-            setupTarget()
-            setupDelegate()
+//            setupConstraints()
+//            setupTarget()
+//            setupDelegate()
         }
     }
     // вошел ли ранее пользователь?
