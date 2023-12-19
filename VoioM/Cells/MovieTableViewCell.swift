@@ -10,12 +10,12 @@ import SnapKit
 
 final class MovieTableViewCell: UITableViewCell {
     //MARK: Properties
-    private let coverImageView: UIImageView = {
+     let coverImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
-    private let titleLabel: UILabel = {
+     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.numberOfLines = 0
@@ -23,12 +23,12 @@ final class MovieTableViewCell: UITableViewCell {
         label.contentMode = .top
         return label
     }()
-    private let yearLabel: UILabel = {
+     let yearLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
-    private let genreLabel: UILabel = {
+     let genreLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         return label

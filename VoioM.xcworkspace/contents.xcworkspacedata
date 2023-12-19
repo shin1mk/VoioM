@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:FavoriteMovie+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:FavoriteMovie+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:VoioM.xcodeproj">
    </FileRef>
    <FileRef

@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import CoreData
 
 final class MovieDetailViewController: UIViewController {
     private let movie: Movie
@@ -154,9 +155,41 @@ extension MovieDetailViewController {
         let imageName = isFavorite ? "star.fill" : "star"
         favoriteButton.setImage(UIImage(systemName: imageName), for: .normal)
     }
-    // handle favorite button tap
+    // favorite button
     @objc private func favoriteButtonTapped() {
         print("Favorite button tapped")
-        isFavorite.toggle()
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let context = appDelegate.persistentContainer.viewContext
+        
+        if let favoriteMovie = NSEntityDescription.insertNewObject(forEntityName: "FavoriteMovie", into: context) as? FavoriteMovie {
+            favoriteMovie.trackName = movie.trackName
+            favoriteMovie.artistName = movie.artistName
+            favoriteMovie.artworkUrl100 = movie.artworkUrl100
+            favoriteMovie.releaseDate = movie.releaseDate
+            favoriteMovie.primaryGenreName = movie.primaryGenreName
+            favoriteMovie.longDescription = movie.longDescription
+            // Преобразовываем изображение в Data
+            if let imageData = coverImageView.image?.pngData() {
+                favoriteMovie.imageData = imageData
+            }
+            do {
+                try context.save()
+                isFavorite = true
+                updateFavoriteButton()
+                
+                print("Movie saved to Core Data:")
+                print("Track Name: \(favoriteMovie.trackName ?? "")")
+                print("Artist Name: \(favoriteMovie.artistName ?? "")")
+                print("Artwork URL: \(favoriteMovie.artworkUrl100 ?? "")")
+                print("Release Date: \(favoriteMovie.releaseDate ?? "")")
+                print("Genre: \(favoriteMovie.primaryGenreName ?? "")")
+                print("Description: \(favoriteMovie.longDescription ?? "")")
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
+        }
     }
 }
