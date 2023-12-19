@@ -11,7 +11,6 @@ import CoreData
 
 
 extension FavoriteMovie {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<FavoriteMovie> {
         return NSFetchRequest<FavoriteMovie>(entityName: "FavoriteMovie")
     }
@@ -23,5 +22,4 @@ extension FavoriteMovie {
     @NSManaged public var primaryGenreName: String?
     @NSManaged public var releaseDate: String?
     @NSManaged public var trackName: String?
-
 }

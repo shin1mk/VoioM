@@ -52,7 +52,6 @@ final class LoginViewController: UIViewController {
     //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-//        checkUserLoginStatus()
         setupConstraints()
         setupTarget()
         setupDelegate()
@@ -62,9 +61,7 @@ final class LoginViewController: UIViewController {
         if isUserLoggedIn() {
             showMainTabViewController()
         } else {
-//            setupConstraints()
-//            setupTarget()
-//            setupDelegate()
+
         }
     }
     // вошел ли ранее пользователь?
@@ -87,7 +84,7 @@ final class LoginViewController: UIViewController {
         emailTextField.delegate = self
         passwordTextField.delegate = self
     }
-    //Constraints
+    // Constraints
     private func setupConstraints() {
         view.backgroundColor = .white
         view.addSubview(infoButton)
@@ -129,21 +126,6 @@ final class LoginViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     // login button
-//    @objc private func loginButtonTapped() {
-//        guard let email = emailTextField.text, !email.isEmpty,
-//              let password = passwordTextField.text, !password.isEmpty else {
-//            showAlertError(message: "Please enter email and password.")
-//            return
-//        }
-//        if email == "123@gmail.com" && password == "qwerty" {
-//            // Успешный вход
-//            setLoggedIn()
-//            print("login done")
-//            showMainTabViewController()
-//        } else {
-//            showAlertError(message: "Invalid email or password.")
-//        }
-//    }
     @objc private func loginButtonTapped() {
         guard let email = emailTextField.text, !email.isEmpty,
               let password = passwordTextField.text, !password.isEmpty else {
@@ -161,7 +143,6 @@ final class LoginViewController: UIViewController {
         fetchRequest.predicate = NSPredicate(format: "email == %@", email)
 
         do {
-            // Выполняем запрос
             let users = try context.fetch(fetchRequest)
             // Проверяем есть ли пользователь с таким email и паролем
             if let user = users.first, user.password == password {

@@ -44,7 +44,7 @@ final class ProfileViewController: UIViewController {
         tableView.dataSource = self
     }
     
-    private func fetchUserData() {
+     func fetchUserData() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
@@ -58,6 +58,9 @@ final class ProfileViewController: UIViewController {
             // всегда один пользователь
             if let currentUser = users.first {
                 currentUser.willAccessValue(forKey: nil) // доступ ко всем свойствам
+                
+                print("Fetched User - Username: \(currentUser.username ?? "No username"), Email: \(currentUser.email ?? "No email")")
+                
                 userData = [
                     ("Имя", currentUser.username ?? ""),
                     ("Логин", currentUser.email ?? ""),
@@ -71,27 +74,30 @@ final class ProfileViewController: UIViewController {
         }
     }
     
+    @objc private func logoutButtonTapped() {
+        clearUserData()
+        navigateToLoginScreen()
+        deleteAllFavoriteMovies()
+        print("Logout button tapped")
+    }
+    
     private func setupLogoutButton() {
         let logoutButton = UIButton(type: .system)
         logoutButton.setTitle("Выйти", for: .normal)
         logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: logoutButton)
     }
-    @objc private func logoutButtonTapped() {
-        // clearUserData()
-        navigateToLoginScreen()
-    }
-    
+
     private func clearUserData() {
         // Получаем доступ к контексту CoreData
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
-        
+
         let context = appDelegate.persistentContainer.viewContext
         // Создаем запрос к CoreData для получения данных о текущем пользователе
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
-        
+
         do {
             let users = try context.fetch(fetchRequest)
             // всегда один пользователь
@@ -99,15 +105,40 @@ final class ProfileViewController: UIViewController {
                 // Удаляем текущего пользователя из контекста CoreData
                 context.delete(currentUser)
                 try context.save()
+                print("User profile data cleared successfully.")
             }
         } catch {
             print("Error clearing user data: \(error)")
+        }
+        // Очистите данные в массиве userData
+        userData = []
+        // Перезагрузите таблицу, чтобы отразить изменения
+        tableView.reloadData()
+    }
+    // удаляем все статьи
+    private func deleteAllFavoriteMovies() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+
+        let context = appDelegate.persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<FavoriteMovie> = FavoriteMovie.fetchRequest()
+
+        do {
+            let favoriteMovies = try context.fetch(fetchRequest)
+            for movie in favoriteMovies {
+                context.delete(movie)
+            }
+
+            try context.save()
+            print("All favorite movies deleted successfully.")
+        } catch let error as NSError {
+            print("Error deleting all favorite movies: \(error), \(error.userInfo)")
         }
     }
     
     private func navigateToLoginScreen() {
         let loginViewController = LoginViewController()
-//        let loginViewController = RegistrationViewController()
         let navigationController = UINavigationController(rootViewController: loginViewController)
         navigationController.modalPresentationStyle = .fullScreen
         present(navigationController, animated: true, completion: nil)

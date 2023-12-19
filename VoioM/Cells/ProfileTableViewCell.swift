@@ -8,47 +8,33 @@
 import UIKit
 import SnapKit
 
-class ProfileTableViewCell: UITableViewCell {
+final class ProfileTableViewCell: UITableViewCell {
     static let reuseIdentifier = "ProfileTableViewCell"
-
-    let titleLabel: UILabel = {
+    public let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
         return label
     }()
 
-    let valueLabel: UILabel = {
+    public let valueLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .gray
+        label.textColor = .systemGray
         return label
     }()
-
-    // Дополнительные свойства, если нужно
-    
     // MARK: - Initializers
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupSubviews()
         setupConstraints()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setupSubviews()
         setupConstraints()
     }
-
     // MARK: - Private Methods
-    
-    private func setupSubviews() {
+    private func setupConstraints() {
         contentView.addSubview(titleLabel)
         contentView.addSubview(valueLabel)
-        
-        // Добавьте дополнительные свойства, если нужно
-    }
-
-    private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView).offset(8)
             make.leading.equalTo(contentView).offset(16)

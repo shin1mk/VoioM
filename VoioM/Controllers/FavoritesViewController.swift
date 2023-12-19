@@ -63,27 +63,53 @@ final class FavoritesViewController: UIViewController {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
-
+        
         let context = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<FavoriteMovie>(entityName: "FavoriteMovie")
-
+        
         do {
             favoriteMovies = try context.fetch(fetchRequest)
             tableView.reloadData()
             // Show/hide emptyFavoritesLabel
             emptyFavoritesLabel.isHidden = !favoriteMovies.isEmpty
-
+            
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
-
+    // удаления статьи из избранного
+    private func deleteFavoriteMovie(at indexPath: IndexPath) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let context = appDelegate.persistentContainer.viewContext
+        let favoriteMovie = favoriteMovies[indexPath.row]
+        
+        context.delete(favoriteMovie)
+        
+        do {
+            try context.save()
+            favoriteMovies.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            // Show/hide emptyFavoritesLabel
+            emptyFavoritesLabel.isHidden = !favoriteMovies.isEmpty
+        } catch let error as NSError {
+            print("Error deleting movie: \(error), \(error.userInfo)")
+        }
+    }
 }
 //MARK: UITableView
 extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
     // высота
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 95
+    }
+    // swipe to delete
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            deleteFavoriteMovie(at: indexPath)
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -111,7 +137,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         showMovieDetails(for: selectedFavoriteMovie)
         tableView.deselectRow(at: indexPath, animated: true)
     }
-
+    
     private func showMovieDetails(for favoriteMovie: FavoriteMovie) {
         print("Selected Favorite Movie:")
         print("Track Name: \(favoriteMovie.trackName ?? "")")
@@ -120,7 +146,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         print("Release Date: \(favoriteMovie.releaseDate ?? "")")
         print("Genre: \(favoriteMovie.primaryGenreName ?? "")")
         print("Description: \(favoriteMovie.longDescription ?? "")")
-
+        
         let movieDetailViewController = MovieDetailViewController(favoriteMovie: favoriteMovie)
         navigationController?.pushViewController(movieDetailViewController, animated: true)
     }
