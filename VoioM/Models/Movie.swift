@@ -14,7 +14,7 @@ struct Movie: Codable {
     var releaseDate: String // Год
     let primaryGenreName: String // Жанр
     var longDescription: String? // Описание
-
+    
     enum CodingKeys: String, CodingKey {
         case trackName
         case artistName

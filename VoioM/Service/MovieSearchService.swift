@@ -32,30 +32,30 @@ final class MovieSearchService {
             completion(nil, error)
             return
         }
-
+        
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 print("URL Session Error: \(error)")
                 completion(nil, error)
                 return
             }
-
+            
             guard let data = data else {
                 let error = NSError(domain: "No data received", code: 0, userInfo: nil)
                 print("No data received. Error: \(error)")
                 completion(nil, error)
                 return
             }
-
+            
             do {
                 let decoder = JSONDecoder()
                 let result = try decoder.decode(MovieSearchResult.self, from: data)
-//                print("Decoded result: \(result)")
+                // print("Decoded result: \(result)")
                 var moviesWithDescriptions = result.results
                 // change date format
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-
+                
                 for (index, movie) in moviesWithDescriptions.enumerated() {
                     if let date = dateFormatter.date(from: movie.releaseDate) {
                         let newDateFormat = DateFormatter()

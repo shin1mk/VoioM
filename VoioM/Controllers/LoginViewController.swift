@@ -184,7 +184,7 @@ final class LoginViewController: UIViewController {
             animateTransition(to: mainTabBarController, in: window)
         }
     }
-    // create vc 
+    // create vc
     private func generateVC(viewController: UIViewController, title: String, image: UIImage?) -> UIViewController {
         let navigationController = UINavigationController(rootViewController: viewController)
         navigationController.tabBarItem.title = title

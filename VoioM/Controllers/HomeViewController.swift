@@ -143,7 +143,7 @@ extension HomeViewController {
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
     }
-
+    
     @objc private func handleTap() {
         view.endEditing(true) // Закрываем клавиатуру
     }
@@ -174,10 +174,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as? MovieTableViewCell else {
             return UITableViewCell()
         }
-
+        
         let movie = movies[indexPath.row]
         cell.configure(with: movie)
-
+        
         return cell
     }
     // нажата
@@ -185,7 +185,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         let selectedMovie = movies[indexPath.row]
         showMovieDetails(for: selectedMovie)
         tableView.deselectRow(at: indexPath, animated: true)
-
     }
     // открываем about
     private func showMovieDetails(for movie: Movie) {

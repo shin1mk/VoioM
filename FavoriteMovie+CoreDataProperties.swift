@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 extension FavoriteMovie {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<FavoriteMovie> {
@@ -22,5 +21,4 @@ extension FavoriteMovie {
     @NSManaged public var releaseDate: String?
     @NSManaged public var primaryGenreName: String?
     @NSManaged public var longDescription: String?
-
 }

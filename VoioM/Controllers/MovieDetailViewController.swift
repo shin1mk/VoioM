@@ -45,7 +45,7 @@ final class MovieDetailViewController: UIViewController {
         let button = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareButtonTapped))
         return button
     }()
-    let favoriteButton: UIButton = {
+    private let favoriteButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "star"), for: .normal)
         button.tintColor = .systemBlue
@@ -56,11 +56,7 @@ final class MovieDetailViewController: UIViewController {
         self.movie = movie
         super.init(nibName: nil, bundle: nil)
     }
-    private var isFavorite: Bool = false {
-        didSet {
-            updateFavoriteButton()
-        }
-    }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -146,6 +142,12 @@ final class MovieDetailViewController: UIViewController {
         let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: nil)
         present(activityViewController, animated: true, completion: nil)
     }
+    
+    var isFavorite: Bool = false {
+        didSet {
+            updateFavoriteButton()
+        }
+    }
 } // end
 extension MovieDetailViewController {
     //MARK: Favorites
@@ -157,13 +159,13 @@ extension MovieDetailViewController {
     // favorite button
     @objc private func favoriteButtonTapped() {
         print("Favorite button tapped")
-
+        
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
-
+        
         _ = appDelegate.persistentContainer.viewContext
-
+        
         if isMovieAlreadySaved() {
             // Фильм уже сохранен, удаляем его из Core Data
             deleteMovieFromCoreData()
@@ -172,14 +174,14 @@ extension MovieDetailViewController {
             saveMovieToCoreData()
         }
     }
-    
+    // сохранить в coreData
     private func saveMovieToCoreData() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
-
+        
         let context = appDelegate.persistentContainer.viewContext
-
+        
         if let favoriteMovie = NSEntityDescription.insertNewObject(forEntityName: "FavoriteMovie", into: context) as? FavoriteMovie {
             favoriteMovie.trackName = movie.trackName
             favoriteMovie.artistName = movie.artistName
@@ -191,12 +193,11 @@ extension MovieDetailViewController {
             if let imageData = coverImageView.image?.pngData() {
                 favoriteMovie.imageData = imageData
             }
-
+            
             do {
                 try context.save()
                 isFavorite = true
                 updateFavoriteButton()
-
                 print("Movie saved to Core Data:")
                 print("Track Name: \(favoriteMovie.trackName ?? "")")
                 print("Artist Name: \(favoriteMovie.artistName ?? "")")
@@ -209,17 +210,16 @@ extension MovieDetailViewController {
             }
         }
     }
-
     // check if the movie is in favorites
     private func isMovieAlreadySaved() -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return false
         }
-
+        
         let context = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteMovie")
         fetchRequest.predicate = NSPredicate(format: "trackName == %@", movie.trackName)
-
+        
         do {
             let results = try context.fetch(fetchRequest)
             return !results.isEmpty
@@ -228,16 +228,16 @@ extension MovieDetailViewController {
             return false
         }
     }
-    
+    // delete from coreData
     private func deleteMovieFromCoreData() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
-
+        
         let context = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteMovie")
         fetchRequest.predicate = NSPredicate(format: "trackName == %@", movie.trackName)
-
+        
         do {
             let results = try context.fetch(fetchRequest)
             if let favoriteMovie = results.first as? NSManagedObject {

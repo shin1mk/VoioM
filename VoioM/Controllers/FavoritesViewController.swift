@@ -91,14 +91,14 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     // нажата
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let selectedMovie = movies[indexPath.row]
-//        showMovieDetails(for: selectedMovie)
-//        tableView.deselectRow(at: indexPath, animated: true)
-//    }
-//    // открываем about
-//    private func showMovieDetails(for movie: Movie) {
-//        let movieDetailViewController = MovieDetailViewController(movie: movie)
-//        navigationController?.pushViewController(movieDetailViewController, animated: true)
-//    }
+    //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    //        let selectedMovie = movies[indexPath.row]
+    //        showMovieDetails(for: selectedMovie)
+    //        tableView.deselectRow(at: indexPath, animated: true)
+    //    }
+    //    // открываем about
+    //    private func showMovieDetails(for movie: Movie) {
+    //        let movieDetailViewController = MovieDetailViewController(movie: movie)
+    //        navigationController?.pushViewController(movieDetailViewController, animated: true)
+    //    }
 }
