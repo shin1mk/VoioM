@@ -134,7 +134,7 @@ final class LoginViewController: UIViewController {
         if email == "123@gmail.com" && password == "qwerty" {
             // Успешный вход
             setLoggedIn()
-            print("okay")
+            print("login done")
             showMainTabViewController()
         } else {
             showAlertError(message: "Invalid email or password.")

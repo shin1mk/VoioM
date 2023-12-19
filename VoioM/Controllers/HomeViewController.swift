@@ -82,7 +82,7 @@ final class HomeViewController: UIViewController {
             make.trailing.equalTo(view).offset(-20)
         }
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(searchTextField.snp.bottom).offset(20)
+            make.top.equalTo(searchTextField.snp.bottom).offset(10)
             make.leading.trailing.equalTo(view)
             make.bottom.equalTo(bottomMarginGuide.snp.top)
         }
