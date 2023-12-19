@@ -12,7 +12,6 @@ import CoreData
 final class MovieDetailViewController: UIViewController {
     private let movie: Movie?
     private let favoriteMovie: FavoriteMovie?
-    
     //MARK: Properties
     private let coverImageView: UIImageView = {
         let imageView = UIImageView()
@@ -53,17 +52,16 @@ final class MovieDetailViewController: UIViewController {
         button.tintColor = .systemBlue
         return button
     }()
-    // init
     // Общий инициализатор для Movie и FavoriteMovie
-      init(movie: Movie? = nil, favoriteMovie: FavoriteMovie? = nil) {
-          self.movie = movie
-          self.favoriteMovie = favoriteMovie
-          super.init(nibName: nil, bundle: nil)
-      }
-
-      required init?(coder: NSCoder) {
-          fatalError("init(coder:) has not been implemented")
-      }
+    init(movie: Movie? = nil, favoriteMovie: FavoriteMovie? = nil) {
+        self.movie = movie
+        self.favoriteMovie = favoriteMovie
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,7 +82,6 @@ final class MovieDetailViewController: UIViewController {
             title = truncatedTitle
         }
     }
-
     // constraints
     private func setupUI() {
         view.backgroundColor = .white
@@ -124,6 +121,7 @@ final class MovieDetailViewController: UIViewController {
     }
     // load data
     private func populateUI() {
+        // if from homeVC
         if let movie = movie {
             titleLabel.text = movie.trackName
             releaseDateLabel.text = "Release Date: \(movie.releaseDate)"
@@ -139,6 +137,7 @@ final class MovieDetailViewController: UIViewController {
                     }
                 }.resume()
             }
+            // if from favorite vc
         } else if let favoriteMovie = favoriteMovie {
             titleLabel.text = favoriteMovie.trackName
             releaseDateLabel.text = "Release Date: \(favoriteMovie.releaseDate ?? "")"
@@ -192,7 +191,7 @@ extension MovieDetailViewController {
             saveMovieToCoreData()
         }
     }
-    // сохранить в coreData
+    // save in coreData
     private func saveMovieToCoreData() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
@@ -249,7 +248,6 @@ extension MovieDetailViewController {
             return false
         }
     }
-    
     // delete from coreData
     private func deleteMovieFromCoreData() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {

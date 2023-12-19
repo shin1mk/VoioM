@@ -14,6 +14,14 @@ final class FavoritesViewController: UIViewController {
         tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: "MovieCell")
         return tableView
     }()
+    private let emptyFavoritesLabel: UILabel = {
+        let label = UILabel()
+        label.text = "No favorite movies"
+        label.textAlignment = .center
+        label.textColor = .systemGray
+        label.isHidden = true
+        return label
+    }()
     private let bottomMarginGuide = UILayoutGuide()
     private var favoriteMovies: [FavoriteMovie] = []
     
@@ -31,6 +39,10 @@ final class FavoritesViewController: UIViewController {
         view.backgroundColor = .white
         view.addSubview(tableView)
         view.addLayoutGuide(bottomMarginGuide)
+        view.addSubview(emptyFavoritesLabel)
+        emptyFavoritesLabel.snp.makeConstraints { make in
+            make.center.equalTo(tableView)
+        }
         tableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             make.leading.trailing.equalTo(view)
@@ -51,18 +63,21 @@ final class FavoritesViewController: UIViewController {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
-        
+
         let context = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<FavoriteMovie>(entityName: "FavoriteMovie")
-        
+
         do {
             favoriteMovies = try context.fetch(fetchRequest)
             tableView.reloadData()
-            
+            // Show/hide emptyFavoritesLabel
+            emptyFavoritesLabel.isHidden = !favoriteMovies.isEmpty
+
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
+
 }
 //MARK: UITableView
 extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
@@ -91,16 +106,12 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     // нажата
-    // В методе didSelectRowAt
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedFavoriteMovie = favoriteMovies[indexPath.row]
         showMovieDetails(for: selectedFavoriteMovie)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
-    // Добавьте этот метод в FavoritesViewController
-    // В FavoritesViewController
-    // В FavoritesViewController
     private func showMovieDetails(for favoriteMovie: FavoriteMovie) {
         print("Selected Favorite Movie:")
         print("Track Name: \(favoriteMovie.trackName ?? "")")
@@ -113,6 +124,4 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         let movieDetailViewController = MovieDetailViewController(favoriteMovie: favoriteMovie)
         navigationController?.pushViewController(movieDetailViewController, animated: true)
     }
-
-
 }

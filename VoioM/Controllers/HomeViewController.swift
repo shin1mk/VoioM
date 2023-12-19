@@ -188,6 +188,14 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     // открываем about
     private func showMovieDetails(for movie: Movie) {
+        print("Selected Movie:")
+        print("Track Name: \(movie.trackName )")
+        print("Artist Name: \(movie.artistName )")
+        print("Artwork URL: \(movie.artworkUrl100 )")
+        print("Release Date: \(movie.releaseDate )")
+        print("Genre: \(movie.primaryGenreName )")
+        print("Description: \(movie.longDescription ?? "")")
+
         let movieDetailViewController = MovieDetailViewController(movie: movie)
         navigationController?.pushViewController(movieDetailViewController, animated: true)
     }
