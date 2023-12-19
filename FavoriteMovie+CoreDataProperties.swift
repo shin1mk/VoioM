@@ -2,12 +2,13 @@
 //  FavoriteMovie+CoreDataProperties.swift
 //  
 //
-//  Created by SHIN MIKHAIL on 18.12.2023.
+//  Created by SHIN MIKHAIL on 19.12.2023.
 //
 //
 
 import Foundation
 import CoreData
+
 
 extension FavoriteMovie {
 
@@ -15,10 +16,12 @@ extension FavoriteMovie {
         return NSFetchRequest<FavoriteMovie>(entityName: "FavoriteMovie")
     }
 
-    @NSManaged public var trackName: String?
     @NSManaged public var artistName: String?
     @NSManaged public var artworkUrl100: String?
-    @NSManaged public var releaseDate: String?
-    @NSManaged public var primaryGenreName: String?
+    @NSManaged public var imageData: Data?
     @NSManaged public var longDescription: String?
+    @NSManaged public var primaryGenreName: String?
+    @NSManaged public var releaseDate: String?
+    @NSManaged public var trackName: String?
+
 }
