@@ -11,10 +11,6 @@ import CoreData
 
 final class RegistrationViewController: UIViewController {
     // MARK: - Properties
-    
-    
-    
-    // MARK: - Properties
     private let usernameTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Enter your username"
@@ -77,50 +73,40 @@ final class RegistrationViewController: UIViewController {
             make.leading.trailing.height.equalTo(usernameTextField)
         }
     }
-    
+    // target
     private func setupTarget() {
         registerButton.addTarget(self, action: #selector(registerDoneButtonTapped), for: .touchUpInside)
     }
     // MARK: - Actions
     @objc private func registerDoneButtonTapped() {
         print("Registration button tapped")
-
         // Получаем доступ к контексту CoreData
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
-
         let context = appDelegate.persistentContainer.viewContext
-
         // Создаем новый объект User
         if let newUser = NSEntityDescription.insertNewObject(forEntityName: "User", into: context) as? User {
             // Устанавливаем свойства объекта из текстовых полей
             newUser.username = usernameTextField.text
             newUser.email = emailTextField.text
             newUser.password = passwordTextField.text
-
-            // Сохраняем изменения в контексте
             do {
                 try context.save()
                 print("User saved successfully")
-
-                // Печатаем данные пользователя после успешного сохранения
+                // prints
                 if let username = newUser.username,
                    let email = newUser.email,
                    let password = newUser.password {
                     print("Saved User - Username: \(username), Email: \(email), Password: \(password)")
                 }
-
+                // button change color
                 registerButton.setTitle("OK", for: .normal)
                 registerButton.backgroundColor = .systemGreen
                 registerButton.isEnabled = false
-
             } catch {
                 print("Error saving user: \(error)")
             }
         }
     }
-
-    
-    
 }

@@ -147,25 +147,22 @@ final class LoginViewController: UIViewController {
             showAlertError(message: "Please enter email and password.")
             return
         }
-
-        // Получаем доступ к контексту CoreData
+        // обратимся к CoreData
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
-
+        
         let context = appDelegate.persistentContainer.viewContext
-
-        // Создаем запрос для поиска пользователя с введенным email
+        // ищем пользователя с введенным email
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "email == %@", email)
 
         do {
             // Выполняем запрос
             let users = try context.fetch(fetchRequest)
-
-            // Проверяем, есть ли пользователь с таким email и паролем
+            // Проверяем есть ли пользователь с таким email и паролем
             if let user = users.first, user.password == password {
-                // Успешный вход
+                // если есть то
                 setLoggedIn()
                 print("Login done")
                 showMainTabViewController()
@@ -177,7 +174,6 @@ final class LoginViewController: UIViewController {
             showAlertError(message: "An error occurred while trying to log in.")
         }
     }
-
     // error alert
     private func showAlertError(message: String) {
         let alert = UIAlertController(title: "Error 🤬",
@@ -188,12 +184,7 @@ final class LoginViewController: UIViewController {
     }
     // register button
     @objc private func registerButtonTapped() {
-        //        let alert = UIAlertController(title: "Register",
-        //                                      message: "not available 🥲",
-        //                                      preferredStyle: .alert)
-        //        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        //        present(alert, animated: true, completion: nil)
-        let registrationViewController = RegistrationViewController() // Используйте свой собственный конструктор, если у вас есть параметры
+        let registrationViewController = RegistrationViewController()
         navigationController?.pushViewController(registrationViewController, animated: true)
     }
     //MARK: - show main tab vc
