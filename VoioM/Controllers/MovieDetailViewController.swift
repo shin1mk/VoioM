@@ -10,7 +10,9 @@ import SnapKit
 import CoreData
 
 final class MovieDetailViewController: UIViewController {
-    private let movie: Movie
+    private let movie: Movie?
+    private let favoriteMovie: FavoriteMovie?
+    
     //MARK: Properties
     private let coverImageView: UIImageView = {
         let imageView = UIImageView()
@@ -52,14 +54,16 @@ final class MovieDetailViewController: UIViewController {
         return button
     }()
     // init
-    init(movie: Movie) {
-        self.movie = movie
-        super.init(nibName: nil, bundle: nil)
-    }
+    // Общий инициализатор для Movie и FavoriteMovie
+      init(movie: Movie? = nil, favoriteMovie: FavoriteMovie? = nil) {
+          self.movie = movie
+          self.favoriteMovie = favoriteMovie
+          super.init(nibName: nil, bundle: nil)
+      }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+      required init?(coder: NSCoder) {
+          fatalError("init(coder:) has not been implemented")
+      }
     //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,9 +79,12 @@ final class MovieDetailViewController: UIViewController {
     }
     // title 25 символов
     private func setMovieTitle() {
-        let truncatedTitle = String(movie.trackName.prefix(25))
-        title = truncatedTitle
+        if let unwrappedMovie = movie {
+            let truncatedTitle = String(unwrappedMovie.trackName.prefix(25))
+            title = truncatedTitle
+        }
     }
+
     // constraints
     private func setupUI() {
         view.backgroundColor = .white
@@ -117,19 +124,30 @@ final class MovieDetailViewController: UIViewController {
     }
     // load data
     private func populateUI() {
-        titleLabel.text = movie.trackName
-        releaseDateLabel.text = "Release Date: \(movie.releaseDate)"
-        genreLabel.text = "Genre: \(movie.primaryGenreName)"
-        descriptionTextView.text = "\(movie.longDescription ?? "No description available.")"
-        
-        if let url = URL(string: movie.artworkUrl100) {
-            URLSession.shared.dataTask(with: url) { data, _, error in
-                if let data = data, let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self.coverImageView.image = image
+        if let movie = movie {
+            titleLabel.text = movie.trackName
+            releaseDateLabel.text = "Release Date: \(movie.releaseDate)"
+            genreLabel.text = "Genre: \(movie.primaryGenreName)"
+            descriptionTextView.text = "\(movie.longDescription ?? "No description available.")"
+            
+            if let url = URL(string: movie.artworkUrl100) {
+                URLSession.shared.dataTask(with: url) { data, _, error in
+                    if let data = data, let image = UIImage(data: data) {
+                        DispatchQueue.main.async {
+                            self.coverImageView.image = image
+                        }
                     }
-                }
-            }.resume()
+                }.resume()
+            }
+        } else if let favoriteMovie = favoriteMovie {
+            titleLabel.text = favoriteMovie.trackName
+            releaseDateLabel.text = "Release Date: \(favoriteMovie.releaseDate ?? "")"
+            genreLabel.text = "Genre: \(favoriteMovie.primaryGenreName ?? "")"
+            descriptionTextView.text = "\(favoriteMovie.longDescription ?? "No description available.")"
+            
+            if let imageData = favoriteMovie.imageData {
+                coverImageView.image = UIImage(data: imageData)
+            }
         }
     }
     // target
@@ -138,7 +156,7 @@ final class MovieDetailViewController: UIViewController {
     }
     // share
     @objc private func shareButtonTapped() {
-        let shareText = "I'm watching \(movie.trackName) in the VoioM app!"
+        let shareText = "I'm watching \(movie!.trackName) in the VoioM app!"
         let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: nil)
         present(activityViewController, animated: true, completion: nil)
     }
@@ -183,12 +201,12 @@ extension MovieDetailViewController {
         let context = appDelegate.persistentContainer.viewContext
         
         if let favoriteMovie = NSEntityDescription.insertNewObject(forEntityName: "FavoriteMovie", into: context) as? FavoriteMovie {
-            favoriteMovie.trackName = movie.trackName
-            favoriteMovie.artistName = movie.artistName
-            favoriteMovie.artworkUrl100 = movie.artworkUrl100
-            favoriteMovie.releaseDate = movie.releaseDate
-            favoriteMovie.primaryGenreName = movie.primaryGenreName
-            favoriteMovie.longDescription = movie.longDescription
+            favoriteMovie.trackName = movie?.trackName
+            favoriteMovie.artistName = movie?.artistName
+            favoriteMovie.artworkUrl100 = movie?.artworkUrl100
+            favoriteMovie.releaseDate = movie?.releaseDate
+            favoriteMovie.primaryGenreName = movie?.primaryGenreName
+            favoriteMovie.longDescription = movie?.longDescription
             // Преобразовываем изображение в Data
             if let imageData = coverImageView.image?.pngData() {
                 favoriteMovie.imageData = imageData
@@ -218,8 +236,11 @@ extension MovieDetailViewController {
         
         let context = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteMovie")
-        fetchRequest.predicate = NSPredicate(format: "trackName == %@", movie.trackName)
-        
+        if let movie = movie {
+            fetchRequest.predicate = NSPredicate(format: "trackName == %@", movie.trackName)
+        } else {
+            print("Warning: 'movie' is nil in the FavoritesViewController.")
+        }
         do {
             let results = try context.fetch(fetchRequest)
             return !results.isEmpty
@@ -228,6 +249,7 @@ extension MovieDetailViewController {
             return false
         }
     }
+    
     // delete from coreData
     private func deleteMovieFromCoreData() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -236,8 +258,12 @@ extension MovieDetailViewController {
         
         let context = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteMovie")
-        fetchRequest.predicate = NSPredicate(format: "trackName == %@", movie.trackName)
         
+        if let unwrappedMovie = movie {
+            fetchRequest.predicate = NSPredicate(format: "trackName == %@", unwrappedMovie.trackName)
+        } else {
+            print("Warning: 'movie' is nil in the FavoritesViewController.")
+        }
         do {
             let results = try context.fetch(fetchRequest)
             if let favoriteMovie = results.first as? NSManagedObject {

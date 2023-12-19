@@ -80,7 +80,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         
         let favoriteMovie = favoriteMovies[indexPath.row]
         
-        cell.titleLabel.text = "\(favoriteMovie.trackName!) by \(favoriteMovie.artistName!)"
+        cell.titleLabel.text = "\(favoriteMovie.trackName!) by \(String(describing: favoriteMovie.artistName!))"
         cell.yearLabel.text = "Year: \(favoriteMovie.releaseDate ?? "")"
         cell.genreLabel.text = "Genre: \(favoriteMovie.primaryGenreName ?? "")"
         // изображениe
@@ -91,14 +91,28 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     // нажата
-    //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    //        let selectedMovie = movies[indexPath.row]
-    //        showMovieDetails(for: selectedMovie)
-    //        tableView.deselectRow(at: indexPath, animated: true)
-    //    }
-    //    // открываем about
-    //    private func showMovieDetails(for movie: Movie) {
-    //        let movieDetailViewController = MovieDetailViewController(movie: movie)
-    //        navigationController?.pushViewController(movieDetailViewController, animated: true)
-    //    }
+    // В методе didSelectRowAt
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedFavoriteMovie = favoriteMovies[indexPath.row]
+        showMovieDetails(for: selectedFavoriteMovie)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+
+    // Добавьте этот метод в FavoritesViewController
+    // В FavoritesViewController
+    // В FavoritesViewController
+    private func showMovieDetails(for favoriteMovie: FavoriteMovie) {
+        print("Selected Favorite Movie:")
+        print("Track Name: \(favoriteMovie.trackName ?? "")")
+        print("Artist Name: \(favoriteMovie.artistName ?? "")")
+        print("Artwork URL: \(favoriteMovie.artworkUrl100 ?? "")")
+        print("Release Date: \(favoriteMovie.releaseDate ?? "")")
+        print("Genre: \(favoriteMovie.primaryGenreName ?? "")")
+        print("Description: \(favoriteMovie.longDescription ?? "")")
+
+        let movieDetailViewController = MovieDetailViewController(favoriteMovie: favoriteMovie)
+        navigationController?.pushViewController(movieDetailViewController, animated: true)
+    }
+
+
 }
