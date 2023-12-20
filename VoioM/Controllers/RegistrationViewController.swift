@@ -196,12 +196,11 @@ final class RegistrationViewController: UIViewController {
     }
     // animate
     private func animateButtonTransition() {
-        // Скрываем все вводные поля
-        UIView.animate(withDuration: 0.7) {
-            self.usernameTextField.isHidden = true
-            self.emailTextField.isHidden = true
-            self.passwordTextField.isHidden = true
-        }
+        // отключаем все вводные поля
+        usernameTextField.isEnabled = false
+        emailTextField.isEnabled = false
+        passwordTextField.isEnabled = false
+        
         UIView.animate(withDuration: 0.7) {
             self.usernameLabel.textColor = .systemGreen
             self.emailLabel.textColor = .systemGreen

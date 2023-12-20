@@ -13,13 +13,6 @@ final class HomeViewController: UIViewController {
     private let movieSearchService = MovieSearchService.shared // загрузка по умолчанию
     private var movies: [Movie] = [] // Массив для хранения фильмов
     //MARK: Properties
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Search movie"
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.textColor = .black
-        return label
-    }()
     private lazy var searchTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Search movie"
@@ -79,7 +72,6 @@ final class HomeViewController: UIViewController {
     // constraints
     private func setupConstraints() {
         view.backgroundColor = .white
-        navigationItem.titleView = titleLabel
         view.addSubview(searchTextField)
         view.addSubview(searchButton)
         view.addSubview(tableView)

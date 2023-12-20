@@ -11,13 +11,6 @@ import CoreData
 final class FavoritesViewController: UIViewController {
     //MARK: Properties
     private var favoriteMovies: [FavoriteMovie] = []
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Favorites"
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.textColor = .black
-        return label
-    }()
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: "MovieCell")
@@ -49,7 +42,6 @@ final class FavoritesViewController: UIViewController {
     
     private func setupConstraints() {
         view.backgroundColor = .white
-        navigationItem.titleView = titleLabel
         view.addSubview(tableView)
         view.addSubview(bottomMarginView)
         view.addSubview(emptyFavoritesLabel)

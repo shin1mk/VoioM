@@ -13,12 +13,13 @@ final class ProfileViewController: UIViewController {
     // Массив для хранения данных пользователя
     private var userData: [(title: String, value: String)] = []
     // MARK: - Properties
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Profile"
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.textColor = .black
-        return label
+    private let avatarImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
+        imageView.backgroundColor = .systemBlue
+        imageView.layer.cornerRadius = 50
+        return imageView
     }()
     private let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -53,10 +54,19 @@ final class ProfileViewController: UIViewController {
     // MARK: - Private Methods
     private func setupConstraints() {
         tableView.backgroundColor = .white
-        navigationItem.titleView = titleLabel
+        view.backgroundColor = .white
+
+        view.addSubview(avatarImageView)
+        avatarImageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(0)
+            make.width.height.equalTo(100)
+        }
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(avatarImageView.snp.bottom).offset(0)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-60)
         }
         view.addSubview(logoutButton)
         logoutButton.snp.makeConstraints { make in
@@ -99,8 +109,8 @@ final class ProfileViewController: UIViewController {
                 print("Fetched User - Username: \(currentUser.username ?? "No username"), Email: \(currentUser.email ?? "No email")")
                 
                 userData = [
-                    ("Имя", currentUser.username ?? ""),
-                    ("Логин", currentUser.email ?? ""),
+                    ("Username", currentUser.username ?? ""),
+                    ("Login", currentUser.email ?? ""),
                 ]
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
@@ -216,5 +226,10 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         cell.valueLabel.text = data.value
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Deselect the row to remove the highlight
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
