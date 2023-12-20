@@ -102,7 +102,9 @@ final class ProfileViewController: UIViewController {
                     ("Имя", currentUser.username ?? ""),
                     ("Логин", currentUser.email ?? ""),
                 ]
-                tableView.reloadData()
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
                 print("Username: \(currentUser.username ?? "No username")")
                 print("Email: \(currentUser.email ?? "No email")")
             }
@@ -116,7 +118,7 @@ final class ProfileViewController: UIViewController {
     }
     
     private func logoutAlert() {
-        let alert = UIAlertController(title: "Are you sure??",
+        let alert = UIAlertController(title: "Are you sure?",
                                       message: "Your profile and favorite movies will be deleted.",
                                       preferredStyle: .alert)
         
@@ -130,9 +132,11 @@ final class ProfileViewController: UIViewController {
     }
     
     private func performLogout() {
-        clearUserData()
-        deleteAllFavoriteMovies()
-        navigateToLoginScreen()
+        DispatchQueue.main.async {
+            self.clearUserData()
+            self.deleteAllFavoriteMovies()
+            self.navigateToLoginScreen()
+        }
     }
     
     
@@ -158,10 +162,12 @@ final class ProfileViewController: UIViewController {
         } catch {
             print("Error clearing user data: \(error)")
         }
-        // Очистите данные в массиве userData
+        // Очистил данные в массиве userData
         userData = []
-        // Перезагрузите таблицу, чтобы отразить изменения
-        tableView.reloadData()
+
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     // удаляем все статьи
     private func deleteAllFavoriteMovies() {

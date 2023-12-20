@@ -175,8 +175,8 @@ final class LoginViewController: UIViewController {
         let context = appDelegate.persistentContainer.viewContext
         // ищем пользователя с введенным email
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "email == %@", email)
-        
+        fetchRequest.predicate = NSPredicate(format: "email ==[c] %@", email)
+
         do {
             let users = try context.fetch(fetchRequest)
             // Проверяем есть ли пользователь с таким email и паролем
