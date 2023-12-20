@@ -19,6 +19,7 @@ final class ProfileViewController: UIViewController {
         imageView.layer.masksToBounds = true
         imageView.backgroundColor = .systemBlue
         imageView.layer.cornerRadius = 50
+        imageView.image = UIImage(named: "avatar") // Replace "your_image_name" with the actual name of your image asset
         return imageView
     }()
     private let tableView: UITableView = {

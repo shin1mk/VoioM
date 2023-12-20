@@ -12,6 +12,15 @@ import CoreData
 
 final class LoginViewController: UIViewController {
     //MARK: Properties
+    private let backgroundImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
+        imageView.backgroundColor = .systemBlue
+        imageView.layer.cornerRadius = 50
+        imageView.image = UIImage(named: "background1")
+        return imageView
+    }()
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Hello"
@@ -105,6 +114,11 @@ final class LoginViewController: UIViewController {
         view.backgroundColor = .white
         navigationItem.titleView = titleLabel
         
+//        view.addSubview(backgroundImageView)
+//        backgroundImageView.snp.makeConstraints { make in
+//            make.edges.equalToSuperview()
+//        }
+//        
         view.addSubview(infoButton)
         infoButton.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
