@@ -79,8 +79,21 @@ final class LoginViewController: UIViewController {
             showMainTabViewController()
         } else {
             print("checkUserLoginStatus")
+            navigateToLoginScreen()
         }
     }
+//    private func navigateToLoginScreen() {
+//        // Создаем новый экземпляр LoginViewController
+//        let loginViewController = LoginViewController()
+//        
+//        // Убеждаемся, что он будет единственным контроллером в стеке навигации
+//        navigationController?.setViewControllers([loginViewController], animated: true)
+//    }
+    private func navigateToLoginScreen() {
+        // Переход к корневому контроллеру стека навигации (LoginViewController)
+        navigationController?.popToRootViewController(animated: true)
+    }
+
     // вошел ли ранее пользователь?
     private func isUserLoggedIn() -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
