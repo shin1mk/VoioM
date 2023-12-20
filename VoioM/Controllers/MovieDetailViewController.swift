@@ -270,6 +270,8 @@ extension MovieDetailViewController {
                 isFavorite = false
                 updateFavoriteButton()
                 print("Movie deleted from Core Data")
+                
+                navigationController?.popViewController(animated: true) // назад на экран
             }
         } catch let error as NSError {
             print("Error deleting movie from Core Data: \(error), \(error.userInfo)")

@@ -13,6 +13,13 @@ final class HomeViewController: UIViewController {
     private let movieSearchService = MovieSearchService.shared // загрузка по умолчанию
     private var movies: [Movie] = [] // Массив для хранения фильмов
     //MARK: Properties
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Search movie"
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.textColor = .black
+        return label
+    }()
     private lazy var searchTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Search movie"
@@ -39,7 +46,11 @@ final class HomeViewController: UIViewController {
         tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: "MovieCell")
         return tableView
     }()
-    private let bottomMarginGuide = UILayoutGuide() // нижняя граница
+    private let bottomMarginView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray6
+        return view
+    }()
     //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,10 +79,12 @@ final class HomeViewController: UIViewController {
     // constraints
     private func setupConstraints() {
         view.backgroundColor = .white
+        navigationItem.titleView = titleLabel
         view.addSubview(searchTextField)
         view.addSubview(searchButton)
         view.addSubview(tableView)
-        view.addLayoutGuide(bottomMarginGuide)
+        view.addSubview(bottomMarginView)
+
         searchTextField.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(0)
             make.leading.equalTo(view).offset(20)
@@ -84,11 +97,11 @@ final class HomeViewController: UIViewController {
         tableView.snp.makeConstraints { make in
             make.top.equalTo(searchTextField.snp.bottom).offset(10)
             make.leading.trailing.equalTo(view)
-            make.bottom.equalTo(bottomMarginGuide.snp.top)
+            make.bottom.equalTo(bottomMarginView.snp.top)
         }
         // нижняя граница
-        bottomMarginGuide.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalTo(view)
+        bottomMarginView.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
             make.height.equalTo(90)
         }
     }

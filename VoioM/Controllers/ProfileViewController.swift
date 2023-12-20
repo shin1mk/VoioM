@@ -10,21 +10,40 @@ import CoreData
 import SnapKit
 
 final class ProfileViewController: UIViewController {
+    // Массив для хранения данных пользователя
+    private var userData: [(title: String, value: String)] = []
     // MARK: - Properties
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Profile"
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.textColor = .black
+        return label
+    }()
     private let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.reuseIdentifier)
-        
         return tableView
     }()
-    // Массив для хранения данных пользователя
-    private var userData: [(title: String, value: String)] = []
+    private let logoutButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Log out and delete", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .systemBlue
+        button.layer.cornerRadius = 5.0
+        return button
+    }()
+    private let bottomMarginView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray6
+        return view
+    }()
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupTarget()
         setupDelegate()
         setupConstraints()
-        setupLogoutButton()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -33,10 +52,28 @@ final class ProfileViewController: UIViewController {
     }
     // MARK: - Private Methods
     private func setupConstraints() {
+        tableView.backgroundColor = .white
+        navigationItem.titleView = titleLabel
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        view.addSubview(logoutButton)
+        logoutButton.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-15)
+            make.leading.equalTo(view).offset(20)
+            make.trailing.equalTo(view).offset(-20)
+            make.height.equalTo(40)
+        }
+        view.addSubview(bottomMarginView)
+        bottomMarginView.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
+            make.height.equalTo(90)
+        }
+    }
+    // target
+    private func setupTarget() {
+        logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
     }
     // delegate
     private func setupDelegate() {
@@ -44,7 +81,7 @@ final class ProfileViewController: UIViewController {
         tableView.dataSource = self
     }
     
-     func fetchUserData() {
+    func fetchUserData() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
@@ -75,29 +112,40 @@ final class ProfileViewController: UIViewController {
     }
     
     @objc private func logoutButtonTapped() {
-        clearUserData()
-        navigateToLoginScreen()
-        deleteAllFavoriteMovies()
-        print("Logout button tapped")
+        logoutAlert()
     }
     
-    private func setupLogoutButton() {
-        let logoutButton = UIButton(type: .system)
-        logoutButton.setTitle("Выйти", for: .normal)
-        logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: logoutButton)
+    private func logoutAlert() {
+        let alert = UIAlertController(title: "Are you sure??",
+                                      message: "Your profile and favorite movies will be deleted.",
+                                      preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        alert.addAction(UIAlertAction(title: "Confirm", style: .destructive, handler: { _ in
+            self.performLogout()
+        }))
+        
+        present(alert, animated: true, completion: nil)
     }
-
+    
+    private func performLogout() {
+        clearUserData()
+        deleteAllFavoriteMovies()
+        navigateToLoginScreen()
+    }
+    
+    
     private func clearUserData() {
         // Получаем доступ к контексту CoreData
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
-
+        
         let context = appDelegate.persistentContainer.viewContext
         // Создаем запрос к CoreData для получения данных о текущем пользователе
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
-
+        
         do {
             let users = try context.fetch(fetchRequest)
             // всегда один пользователь
@@ -120,16 +168,16 @@ final class ProfileViewController: UIViewController {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
-
+        
         let context = appDelegate.persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<FavoriteMovie> = FavoriteMovie.fetchRequest()
-
+        
         do {
             let favoriteMovies = try context.fetch(fetchRequest)
             for movie in favoriteMovies {
                 context.delete(movie)
             }
-
+            
             try context.save()
             print("All favorite movies deleted successfully.")
         } catch let error as NSError {

@@ -12,6 +12,13 @@ import CoreData
 
 final class LoginViewController: UIViewController {
     //MARK: Properties
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Hello"
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.textColor = .black
+        return label
+    }()
     private let emailTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Enter your e-mail"
@@ -55,23 +62,32 @@ final class LoginViewController: UIViewController {
         setupConstraints()
         setupTarget()
         setupDelegate()
+        checkUserLoginStatus()
     }
     // вошел в аккаунт или нет
     private func checkUserLoginStatus() {
         if isUserLoggedIn() {
             showMainTabViewController()
         } else {
-
+            print("checkUserLoginStatus")
         }
     }
     // вошел ли ранее пользователь?
     private func isUserLoggedIn() -> Bool {
-        return UserDefaults.standard.bool(forKey: "isUserLoggedIn")
-    }
-    // save log
-    private func setLoggedIn() {
-        UserDefaults.standard.set(true, forKey: "isUserLoggedIn")
-        UserDefaults.standard.synchronize()
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return false
+        }
+        
+        let context = appDelegate.persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
+        
+        do {
+            let users = try context.fetch(fetchRequest)
+            return !users.isEmpty
+        } catch {
+            print("Error fetching users: \(error)")
+            return false
+        }
     }
     // targets
     private func setupTarget() {
@@ -87,10 +103,12 @@ final class LoginViewController: UIViewController {
     // Constraints
     private func setupConstraints() {
         view.backgroundColor = .white
+        navigationItem.titleView = titleLabel
+        
         view.addSubview(infoButton)
         infoButton.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(15)
-            make.leading.equalTo(view).offset(20)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
+            make.trailing.equalTo(view).offset(-20)
             make.height.equalTo(40)
         }
         view.addSubview(emailTextField)
@@ -117,10 +135,28 @@ final class LoginViewController: UIViewController {
             make.height.equalTo(40)
         }
     }
+    // Доп метод удаления всех юзеров из core data
+    private func deleteAllUsers() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let context = appDelegate.persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "User")
+        
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            try context.execute(deleteRequest)
+            print("All users deleted from Core Data.")
+        } catch {
+            print("Error deleting all users: \(error)")
+        }
+    }
     // info button
     @objc private func infoButtonTapped() {
-        let alert = UIAlertController(title: "Enter this data 😎",
-                                      message: "email: 123@gmail.com \npassword: qwerty",
+        let alert = UIAlertController(title: "Register first 😎",
+                                      message: "then enter your email and password",
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
@@ -136,18 +172,16 @@ final class LoginViewController: UIViewController {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
-        
         let context = appDelegate.persistentContainer.viewContext
         // ищем пользователя с введенным email
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "email == %@", email)
-
+        
         do {
             let users = try context.fetch(fetchRequest)
             // Проверяем есть ли пользователь с таким email и паролем
             if let user = users.first, user.password == password {
                 // если есть то
-                setLoggedIn()
                 print("Login done")
                 showMainTabViewController()
             } else {
@@ -170,6 +204,7 @@ final class LoginViewController: UIViewController {
     @objc private func registerButtonTapped() {
         let registrationViewController = RegistrationViewController()
         navigationController?.pushViewController(registrationViewController, animated: true)
+        deleteAllUsers()
     }
     //MARK: - show main tab vc
     private func showMainTabViewController() {
@@ -217,13 +252,13 @@ final class LoginViewController: UIViewController {
 extension LoginViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField == emailTextField {
-            let maxLength = 20
+            let maxLength = 25
             let currentString = textField.text ?? ""
             let newLength = currentString.count + string.count - range.length
             return newLength <= maxLength
         }
         if textField == passwordTextField {
-            let maxLength = 20
+            let maxLength = 25
             let currentString = textField.text ?? ""
             let newLength = currentString.count + string.count - range.length
             return newLength <= maxLength

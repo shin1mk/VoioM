@@ -9,6 +9,15 @@ import UIKit
 import CoreData
 
 final class FavoritesViewController: UIViewController {
+    //MARK: Properties
+    private var favoriteMovies: [FavoriteMovie] = []
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Favorites"
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.textColor = .black
+        return label
+    }()
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: "MovieCell")
@@ -22,9 +31,12 @@ final class FavoritesViewController: UIViewController {
         label.isHidden = true
         return label
     }()
-    private let bottomMarginGuide = UILayoutGuide()
-    private var favoriteMovies: [FavoriteMovie] = []
-    
+    private let bottomMarginView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray6
+        return view
+    }()
+    //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupConstraints()
@@ -37,8 +49,9 @@ final class FavoritesViewController: UIViewController {
     
     private func setupConstraints() {
         view.backgroundColor = .white
+        navigationItem.titleView = titleLabel
         view.addSubview(tableView)
-        view.addLayoutGuide(bottomMarginGuide)
+        view.addSubview(bottomMarginView)
         view.addSubview(emptyFavoritesLabel)
         emptyFavoritesLabel.snp.makeConstraints { make in
             make.center.equalTo(tableView)
@@ -46,10 +59,11 @@ final class FavoritesViewController: UIViewController {
         tableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             make.leading.trailing.equalTo(view)
-            make.bottom.equalTo(bottomMarginGuide.snp.top)
+            make.bottom.equalTo(bottomMarginView.snp.top)
         }
-        bottomMarginGuide.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalTo(view)
+        // нижняя граница
+        bottomMarginView.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
             make.height.equalTo(90)
         }
     }
@@ -77,39 +91,12 @@ final class FavoritesViewController: UIViewController {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
-    // удаления статьи из избранного
-    private func deleteFavoriteMovie(at indexPath: IndexPath) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        
-        let context = appDelegate.persistentContainer.viewContext
-        let favoriteMovie = favoriteMovies[indexPath.row]
-        
-        context.delete(favoriteMovie)
-        
-        do {
-            try context.save()
-            favoriteMovies.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            // Show/hide emptyFavoritesLabel
-            emptyFavoritesLabel.isHidden = !favoriteMovies.isEmpty
-        } catch let error as NSError {
-            print("Error deleting movie: \(error), \(error.userInfo)")
-        }
-    }
 }
 //MARK: UITableView
 extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
     // высота
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 95
-    }
-    // swipe to delete
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            deleteFavoriteMovie(at: indexPath)
-        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -120,10 +107,10 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieTableViewCell
         
         let favoriteMovie = favoriteMovies[indexPath.row]
-        
-        cell.titleLabel.text = "\(favoriteMovie.trackName!) by \(String(describing: favoriteMovie.artistName!))"
-        cell.yearLabel.text = "Year: \(favoriteMovie.releaseDate ?? "")"
-        cell.genreLabel.text = "Genre: \(favoriteMovie.primaryGenreName ?? "")"
+
+        cell.titleLabel.text = "\(favoriteMovie.trackName ?? "Unknown movie name") by \(favoriteMovie.artistName ?? "Unknown artist name")"
+        cell.yearLabel.text = "Year: \(favoriteMovie.releaseDate ?? "2000-10-10")"
+        cell.genreLabel.text = "Genre: \(favoriteMovie.primaryGenreName ?? "Christmas")"
         // изображениe
         if let imageData = favoriteMovie.imageData {
             cell.coverImageView.image = UIImage(data: imageData)
@@ -137,7 +124,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         showMovieDetails(for: selectedFavoriteMovie)
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
+    // откроем детали
     private func showMovieDetails(for favoriteMovie: FavoriteMovie) {
         print("Selected Favorite Movie:")
         print("Track Name: \(favoriteMovie.trackName ?? "")")

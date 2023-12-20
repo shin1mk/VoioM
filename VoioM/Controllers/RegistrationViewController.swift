@@ -11,15 +11,22 @@ import CoreData
 
 final class RegistrationViewController: UIViewController {
     // MARK: - Properties
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Create account"
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.textColor = .black
+        return label
+    }()
     private let usernameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Enter your username"
+        textField.placeholder = "Enter your username (max 25 characters)"
         textField.borderStyle = .roundedRect
         return textField
     }()
     private let emailTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Enter your e-mail"
+        textField.placeholder = "Enter your e-mail (max 25 characters, ends with @gmail.com)"
         textField.borderStyle = .roundedRect
         textField.keyboardType = .emailAddress
         return textField
@@ -43,17 +50,20 @@ final class RegistrationViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         setupTarget()
+        setupDelegate()
         setupConstraints()
     }
     // MARK: - Private Methods
     private func setupConstraints() {
+        view.backgroundColor = .white
+        navigationItem.titleView = titleLabel
+
         view.addSubview(usernameTextField)
         view.addSubview(emailTextField)
         view.addSubview(passwordTextField)
         view.addSubview(registerButton)
-        
+
         usernameTextField.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(50)
             make.leading.equalTo(view).offset(20)
@@ -76,6 +86,12 @@ final class RegistrationViewController: UIViewController {
     // target
     private func setupTarget() {
         registerButton.addTarget(self, action: #selector(registerDoneButtonTapped), for: .touchUpInside)
+    }
+    
+    private func setupDelegate() {
+        usernameTextField.delegate = self
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
     }
     // MARK: - Actions
     @objc private func registerDoneButtonTapped() {
@@ -100,6 +116,10 @@ final class RegistrationViewController: UIViewController {
                    let password = newUser.password {
                     print("Saved User - Username: \(username), Email: \(email), Password: \(password)")
                 }
+                // Скрываем все вводные поля
+                usernameTextField.isHidden = true
+                emailTextField.isHidden = true
+                passwordTextField.isHidden = true
                 // button change color
                 registerButton.setTitle("OK", for: .normal)
                 registerButton.backgroundColor = .systemGreen
@@ -107,6 +127,40 @@ final class RegistrationViewController: UIViewController {
             } catch {
                 print("Error saving user: \(error)")
             }
+        }
+    }
+}
+//extension RegistrationViewController: UITextFieldDelegate {
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        if textField == usernameTextField {
+//            let maxLength = 25
+//            let currentString = textField.text ?? ""
+//            let newLength = currentString.count + string.count - range.length
+//            return newLength <= maxLength
+//        }
+//        return true
+//    }
+//}
+extension RegistrationViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        switch textField {
+        case usernameTextField:
+            // Проверка для usernameTextField
+            let maxLength = 25
+            let currentString = textField.text ?? ""
+            let newLength = currentString.count + string.count - range.length
+            return newLength <= maxLength
+
+        case emailTextField:
+            // Проверка для emailTextField
+            let maxLength = 25
+            let currentString = textField.text ?? ""
+            let newLength = currentString.count + string.count - range.length
+            return newLength <= maxLength
+
+        default:
+            // Если не является ни usernameTextField, ни emailTextField, разрешаем ввод
+            return true
         }
     }
 }
