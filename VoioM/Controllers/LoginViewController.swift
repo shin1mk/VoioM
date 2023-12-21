@@ -176,32 +176,49 @@ final class LoginViewController: UIViewController {
     @objc private func loginButtonTapped() {
         guard let email = emailTextField.text, !email.isEmpty,
               let password = passwordTextField.text, !password.isEmpty else {
-            showAlertError(message: "Please enter email and password.")
+            showAlertError(message: "Введите адрес электронной почты и пароль.")
             return
         }
-        // обратимся к CoreData
+        // Проверка формата электронной почты
+        if !isValidEmail(email) {
+            print("Неверный формат электронной почты.")
+            showAlertError(message: "Неверный формат электронной почты. Пожалуйста, используйте адрес с суффиксом '@gmail.com'.")
+            return
+        }
+        // Получение пользователя из CoreData
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            print("Ошибка получения AppDelegate.")
             return
         }
         let context = appDelegate.persistentContainer.viewContext
-        // ищем пользователя с введенным email
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "email ==[c] %@", email)
 
         do {
             let users = try context.fetch(fetchRequest)
-            // Проверяем есть ли пользователь с таким email и паролем
-            if let user = users.first, user.password == password {
-                // если есть то
-                print("Login done")
-                showMainTabViewController()
+            // Проверка наличия пользователя с email
+            if let user = users.first {
+                // Сравнение пароля
+                if user.password == password {
+                    // вход в систему
+                    print("Вход выполнен")
+                    showMainTabViewController()
+                } else {
+                    print("Неверный пароль.")
+                    showAlertError(message: "Неверный пароль.")
+                }
             } else {
-                showAlertError(message: "Invalid email or password.")
+                print("Пользователь с предоставленным адресом электронной почты не найден.")
+                showAlertError(message: "Пользователь с предоставленным адресом электронной почты не найден.")
             }
         } catch {
-            print("Error fetching user: \(error)")
-            showAlertError(message: "An error occurred while trying to log in.")
+            print("Ошибка при получении пользователя: \(error)")
+            showAlertError(message: "Возникла ошибка при попытке входа в систему.")
         }
+    }
+    // Вспомогательный метод для проверки формата электронной почты
+    private func isValidEmail(_ email: String) -> Bool {
+        return email.hasSuffix("@gmail.com") && email.count > "@gmail.com".count
     }
     // error alert
     private func showAlertError(message: String) {
@@ -242,7 +259,9 @@ final class LoginViewController: UIViewController {
            let windowDelegate = windowScene.delegate as? SceneDelegate,
            let window = windowDelegate.window {
             
-            animateTransition(to: mainTabBarController, in: window)
+            DispatchQueue.main.async {
+                self.animateTransition(to: mainTabBarController, in: window)
+            }
         }
     }
     // create vc
@@ -258,6 +277,7 @@ final class LoginViewController: UIViewController {
             window.rootViewController = viewController
         }, completion: nil)
     }
+    
 } // end
 //MARK: - maxLength textField
 extension LoginViewController: UITextFieldDelegate {
