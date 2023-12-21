@@ -48,6 +48,7 @@ final class MovieTableViewCell: UITableViewCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(yearLabel)
         contentView.addSubview(genreLabel)
+        
         coverImageView.snp.makeConstraints { make in
             make.top.leading.bottom.equalTo(contentView).inset(8)
             make.width.equalTo(80)

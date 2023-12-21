@@ -40,7 +40,6 @@ final class ProfileTableViewCell: UITableViewCell {
             make.leading.equalTo(contentView).offset(16)
             make.trailing.equalTo(contentView).offset(-16)
         }
-
         valueLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(8)
             make.leading.equalTo(contentView).offset(16)

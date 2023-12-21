@@ -19,7 +19,7 @@ final class ProfileViewController: UIViewController {
         imageView.layer.masksToBounds = true
         imageView.backgroundColor = .systemBlue
         imageView.layer.cornerRadius = 50
-        imageView.image = UIImage(named: "avatar") // Replace "your_image_name" with the actual name of your image asset
+        imageView.image = UIImage(named: "avatar")
         return imageView
     }()
     private let tableView: UITableView = {
@@ -150,7 +150,6 @@ final class ProfileViewController: UIViewController {
         }
     }
     
-    
     private func clearUserData() {
         // Получаем доступ к контексту CoreData
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -180,7 +179,7 @@ final class ProfileViewController: UIViewController {
             self.tableView.reloadData()
         }
     }
-    // удаляем все статьи
+    // удаляем все статьи после выхода
     private func deleteAllFavoriteMovies() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
@@ -230,7 +229,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Deselect the row to remove the highlight
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }

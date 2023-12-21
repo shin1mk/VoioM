@@ -35,6 +35,7 @@ final class FavoritesViewController: UIViewController {
         setupConstraints()
         setupDelegates()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchFavoriteMovies()
@@ -53,7 +54,6 @@ final class FavoritesViewController: UIViewController {
             make.leading.trailing.equalTo(view)
             make.bottom.equalTo(bottomMarginView.snp.top)
         }
-        // нижняя граница
         bottomMarginView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview()
             make.height.equalTo(90)

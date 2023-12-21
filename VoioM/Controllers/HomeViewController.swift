@@ -91,7 +91,6 @@ final class HomeViewController: UIViewController {
             make.leading.trailing.equalTo(view)
             make.bottom.equalTo(bottomMarginView.snp.top)
         }
-        // нижняя граница
         bottomMarginView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview()
             make.height.equalTo(90)

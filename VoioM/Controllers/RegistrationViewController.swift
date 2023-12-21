@@ -128,6 +128,7 @@ final class RegistrationViewController: UIViewController {
             make.top.equalTo(passwordLabel.snp.bottom).offset(0)
             make.leading.trailing.height.equalTo(usernameTextField)
         }
+        // buttons
         registerButton.snp.makeConstraints { make in
             make.top.equalTo(passwordTextField.snp.bottom).offset(20)
             make.leading.trailing.height.equalTo(usernameTextField)
@@ -158,12 +159,7 @@ final class RegistrationViewController: UIViewController {
               let email = emailTextField.text, !email.isEmpty,
               let password = passwordTextField.text, !password.isEmpty else {
             // Вывести предупреждение о том, что все поля должны быть заполнены
-            let alert = UIAlertController(title: "Incomplete Information",
-                                          message: "Please fill in all fields.",
-                                          preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alert.addAction(okAction)
-            present(alert, animated: true, completion: nil)
+            showIncompleteInformationAlert()
             return
         }
         let context = appDelegate.persistentContainer.viewContext
@@ -185,16 +181,29 @@ final class RegistrationViewController: UIViewController {
                     print("Error saving user: \(error)")
                 }
             } else {
-                let alert = UIAlertController(title: "Invalid Email Format",
-                                              message: "Please use an email address with the '@gmail.com' suffix.",
-                                              preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                alert.addAction(okAction)
-                present(alert, animated: true, completion: nil)
+                showAlertForInvalidEmailFormat()
             }
         }
     }
-    // animate
+    // если нет @gmail.com
+    private func showAlertForInvalidEmailFormat() {
+        let alert = UIAlertController(title: "Invalid Email Format",
+                                      message: "Please use an email address with the '@gmail.com' suffix.",
+                                      preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
+    }
+    // если 1 поле пустое
+    private func showIncompleteInformationAlert() {
+        let alert = UIAlertController(title: "Incomplete Information",
+                                      message: "Please fill in all fields.",
+                                      preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
+    }
+    // анимация и скрытие
     private func animateButtonTransition() {
         // отключаем все вводные поля
         usernameTextField.isEnabled = false

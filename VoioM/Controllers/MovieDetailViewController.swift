@@ -53,11 +53,6 @@ final class MovieDetailViewController: UIViewController {
         return button
     }()
     // Общий инициализатор для Movie и FavoriteMovie
-//    init(movie: Movie? = nil, favoriteMovie: FavoriteMovie? = nil) {
-//        self.movie = movie
-//        self.favoriteMovie = favoriteMovie
-//        super.init(nibName: nil, bundle: nil)
-//    }
     init(movie: Movie? = nil, favoriteMovie: FavoriteMovie? = nil) {
         if let movie = movie {
             self.movie = movie
@@ -70,13 +65,12 @@ final class MovieDetailViewController: UIViewController {
                                longDescription: favoriteMovie.longDescription)
         } else {
             self.movie = nil
-            print("Warning: Both 'movie' and 'favoriteMovie' are nil in MovieDetailViewController.")
+            print("Warning: Both 'movie' and 'favoriteMovie' are nil.")
         }
         self.favoriteMovie = favoriteMovie
         super.init(nibName: nil, bundle: nil)
     }
 
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -108,7 +102,7 @@ final class MovieDetailViewController: UIViewController {
         view.addSubview(releaseDateLabel)
         view.addSubview(genreLabel)
         view.addSubview(descriptionTextView)
-        // shareButton in navbar
+        // shareButton + favoriteButton in navbar
         navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: favoriteButton), shareButton]
         
         coverImageView.snp.makeConstraints { make in
@@ -178,7 +172,7 @@ final class MovieDetailViewController: UIViewController {
         present(activityViewController, animated: true, completion: nil)
     }
     
-    var isFavorite: Bool = false {
+    private var isFavorite: Bool = false {
         didSet {
             updateFavoriteButton()
         }
@@ -268,34 +262,6 @@ extension MovieDetailViewController {
         }
     }
     // delete from coreData
-//    private func deleteMovieFromCoreData() {
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-//            return
-//        }
-//        
-//        let context = appDelegate.persistentContainer.viewContext
-//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteMovie")
-//        
-//        if let unwrappedMovie = movie {
-//            fetchRequest.predicate = NSPredicate(format: "trackName == %@", unwrappedMovie.trackName)
-//        } else {
-//            print("Warning: 'movie' is nil in the FavoritesViewController.")
-//        }
-//        do {
-//            let results = try context.fetch(fetchRequest)
-//            if let favoriteMovie = results.first as? NSManagedObject {
-//                context.delete(favoriteMovie)
-//                try context.save()
-//                isFavorite = false
-//                updateFavoriteButton()
-//                print("Movie deleted from Core Data")
-//                
-//                navigationController?.popViewController(animated: true) // назад на экран
-//            }
-//        } catch let error as NSError {
-//            print("Error deleting movie from Core Data: \(error), \(error.userInfo)")
-//        }
-//    }
     private func deleteMovieFromCoreData() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
@@ -319,36 +285,9 @@ extension MovieDetailViewController {
                 isFavorite = false
                 updateFavoriteButton()
                 print("Movie deleted from Core Data")
-                
-//                navigationController?.popViewController(animated: true) // назад на экран
             }
         } catch let error as NSError {
             print("Error deleting movie from Core Data: \(error), \(error.userInfo)")
         }
     }
-
-    
-//    private func deleteMovieFromCoreData() {
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-//            return
-//        }
-//
-//        let context = appDelegate.persistentContainer.viewContext
-//
-//        if let favoriteMovieToDelete = favoriteMovie {
-//            context.delete(favoriteMovieToDelete)
-//
-//            do {
-//                try context.save()
-//                isFavorite = false
-//                updateFavoriteButton()
-//                print("Movie deleted from Core Data")
-//
-//                navigationController?.popViewController(animated: true) // назад на экран
-//            } catch let error as NSError {
-//                print("Error deleting movie from Core Data: \(error), \(error.userInfo)")
-//            }
-//        }
-//    }
-
 }

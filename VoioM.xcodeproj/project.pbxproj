@@ -22,7 +22,6 @@
 		13A6DD612B2FAB0600AFF2F4 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A6DD602B2FAB0600AFF2F4 /* MovieTableViewCell.swift */; };
 		13B1EBBF2B2FA81D0035E37D /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B1EBBE2B2FA81D0035E37D /* Movie.swift */; };
 		13B1EBC22B2FA8630035E37D /* MovieSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B1EBC12B2FA8630035E37D /* MovieSearchService.swift */; };
-		13ED489D2B31E953009136EA /* task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13ED489C2B31E953009136EA /* task.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -55,7 +54,6 @@
 		13A6DD602B2FAB0600AFF2F4 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
 		13B1EBBE2B2FA81D0035E37D /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		13B1EBC12B2FA8630035E37D /* MovieSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchService.swift; sourceTree = "<group>"; };
-		13ED489C2B31E953009136EA /* task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = task.swift; sourceTree = "<group>"; };
 		3D1C99D961B37BB77E8281B8 /* Pods-VoioM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VoioM.debug.xcconfig"; path = "Target Support Files/Pods-VoioM/Pods-VoioM.debug.xcconfig"; sourceTree = "<group>"; };
 		595896A29E9E35CA0917E81B /* Pods_VoioM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VoioM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7994FF34FDEDEF45483BFAC /* Pods-VoioM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VoioM.release.xcconfig"; path = "Target Support Files/Pods-VoioM/Pods-VoioM.release.xcconfig"; sourceTree = "<group>"; };
@@ -76,7 +74,6 @@
 		1383861A2B2F178500FAB406 = {
 			isa = PBXGroup;
 			children = (
-				13ED489C2B31E953009136EA /* task.swift */,
 				138386252B2F178500FAB406 /* VoioM */,
 				138386242B2F178500FAB406 /* Products */,
 				AAD032E03BE3639558F3EA75 /* Pods */,
@@ -300,7 +297,6 @@
 				1372E3282B2F8F6F001BDF0E /* HomeViewController.swift in Sources */,
 				132F651A2B31905200B6F716 /* ProfileTableViewCell.swift in Sources */,
 				138386422B2F1CDD00FAB406 /* LoginViewController.swift in Sources */,
-				13ED489D2B31E953009136EA /* task.swift in Sources */,
 				1372E32C2B2F8FD5001BDF0E /* ProfileViewController.swift in Sources */,
 				138386292B2F178500FAB406 /* SceneDelegate.swift in Sources */,
 			);
