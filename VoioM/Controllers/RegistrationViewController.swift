@@ -162,15 +162,16 @@ final class RegistrationViewController: UIViewController {
             showIncompleteInformationAlert()
             return
         }
-        let context = appDelegate.persistentContainer.viewContext
-        // Создаем новый User
-        if let newUser = NSEntityDescription.insertNewObject(forEntityName: "User", into: context) as? User {
-            // Устанавливаем свойства
-            newUser.username = usernameTextField.text
-            newUser.email = emailTextField.text
-            newUser.password = passwordTextField.text
-            // Добавляем проверку для префикса "@gmail.com"
-            if let email = newUser.email, email.hasSuffix("@gmail.com"), email.count > "@gmail.com".count {
+        // Добавляем проверку для префикса "@gmail.com"
+        if email.hasSuffix("@gmail.com") && email.count > "@gmail.com".count {
+            let context = appDelegate.persistentContainer.viewContext
+            // Создаем новый User
+            if let newUser = NSEntityDescription.insertNewObject(forEntityName: "User", into: context) as? User {
+                // Устанавливаем свойства
+                newUser.username = username
+                newUser.email = email
+                newUser.password = password
+
                 do {
                     try context.save()
                     if let username = newUser.username, let email = newUser.email, let password = newUser.password {
@@ -180,9 +181,9 @@ final class RegistrationViewController: UIViewController {
                 } catch {
                     print("Error saving user: \(error)")
                 }
-            } else {
-                showAlertForInvalidEmailFormat()
             }
+        } else {
+            showAlertForInvalidEmailFormat()
         }
     }
     // если нет @gmail.com

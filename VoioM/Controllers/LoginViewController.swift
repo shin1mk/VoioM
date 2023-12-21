@@ -73,15 +73,9 @@ final class LoginViewController: UIViewController {
             navigateToLoginScreen()
         }
     }
-//    private func navigateToLoginScreen() {
-//        // Создаем новый экземпляр LoginViewController
-//        let loginViewController = LoginViewController()
-//        
-//        // Убеждаемся, что он будет единственным контроллером в стеке навигации
-//        navigationController?.setViewControllers([loginViewController], animated: true)
-//    }
+    
     private func navigateToLoginScreen() {
-        // Переход к корневому контроллеру стека навигации (LoginViewController)
+        // Переход к корневому контроллеру
         navigationController?.popToRootViewController(animated: true)
     }
     // вошел ли ранее пользователь?
