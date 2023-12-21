@@ -12,13 +12,6 @@ import CoreData
 
 final class LoginViewController: UIViewController {
     //MARK: Properties
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Hello"
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.textColor = .black
-        return label
-    }()
     private let emailTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Enter your e-mail"
@@ -109,7 +102,6 @@ final class LoginViewController: UIViewController {
     // Constraints
     private func setupConstraints() {
         view.backgroundColor = .white
-        navigationItem.titleView = titleLabel
         view.addSubview(infoButton)
         infoButton.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
@@ -170,18 +162,18 @@ final class LoginViewController: UIViewController {
     @objc private func loginButtonTapped() {
         guard let email = emailTextField.text, !email.isEmpty,
               let password = passwordTextField.text, !password.isEmpty else {
-            showAlertError(message: "Введите адрес электронной почты и пароль.")
+            showAlertError(message: "Enter your e-mail address and password.")
             return
         }
         // Проверка формата электронной почты
         if !isValidEmail(email) {
-            print("Неверный формат электронной почты.")
-            showAlertError(message: "Неверный формат электронной почты. Пожалуйста, используйте адрес с суффиксом '@gmail.com'.")
+            print("Invalid e-mail format.")
+            showAlertError(message: "Incorrect e-mail format. Please use an address with the suffix '@gmail.com'.")
             return
         }
         // Получение пользователя из CoreData
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            print("Ошибка получения AppDelegate.")
+            print("error AppDelegate.")
             return
         }
         let context = appDelegate.persistentContainer.viewContext
@@ -195,19 +187,19 @@ final class LoginViewController: UIViewController {
                 // Сравнение пароля
                 if user.password == password {
                     // вход в систему
-                    print("Вход выполнен")
+                    print("completed")
                     showMainTabViewController()
                 } else {
-                    print("Неверный пароль.")
-                    showAlertError(message: "Неверный пароль.")
+                    print("Invalid password.")
+                    showAlertError(message: "Invalid password.")
                 }
             } else {
-                print("Пользователь с предоставленным адресом электронной почты не найден.")
-                showAlertError(message: "Пользователь с предоставленным адресом электронной почты не найден.")
+                print("No user with the provided email address was found.")
+                showAlertError(message: "No user with the provided email address was found.")
             }
         } catch {
             print("Ошибка при получении пользователя: \(error)")
-            showAlertError(message: "Возникла ошибка при попытке входа в систему.")
+            showAlertError(message: "An error occurred when trying to log in.")
         }
     }
     // Вспомогательный метод для проверки формата электронной почты

@@ -124,7 +124,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         print("Artwork URL: \(favoriteMovie.artworkUrl100 ?? "")")
         print("Release Date: \(favoriteMovie.releaseDate ?? "")")
         print("Genre: \(favoriteMovie.primaryGenreName ?? "")")
-        print("Description: \(favoriteMovie.longDescription ?? "")")
+//        print("Description: \(favoriteMovie.longDescription ?? "")")
         
         let movieDetailViewController = MovieDetailViewController(favoriteMovie: favoriteMovie)
         navigationController?.pushViewController(movieDetailViewController, animated: true)
