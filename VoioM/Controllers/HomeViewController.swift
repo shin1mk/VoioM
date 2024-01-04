@@ -101,6 +101,7 @@ final class HomeViewController: UIViewController {
         searchTextField.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.keyboardDismissMode = .onDrag // клавиатура скрывается при скроллинге
     }
     // target
     private func setupTarget() {
