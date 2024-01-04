@@ -38,7 +38,7 @@ final class MovieDetailViewController: UIViewController {
     }()
     private let descriptionTextView: UITextView = {
         let textView = UITextView()
-        textView.font = UIFont.systemFont(ofSize: 16)
+        textView.font = UIFont.systemFont(ofSize: 15)
         textView.isEditable = false
         return textView
     }()
@@ -108,8 +108,8 @@ final class MovieDetailViewController: UIViewController {
         coverImageView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(15)
             make.leading.equalTo(view).offset(15)
-            make.width.equalTo(150)
-            make.height.equalTo(200)
+            make.width.equalTo(100)
+            make.height.equalTo(100)
         }
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(coverImageView.snp.top)
