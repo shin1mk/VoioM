@@ -52,6 +52,11 @@ final class MovieDetailViewController: UIViewController {
         button.tintColor = .systemBlue
         return button
     }()
+    private let bottomMarginView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray6
+        return view
+    }()
     // Общий инициализатор для Movie и FavoriteMovie
     init(movie: Movie? = nil, favoriteMovie: FavoriteMovie? = nil) {
         if let movie = movie {
@@ -102,6 +107,7 @@ final class MovieDetailViewController: UIViewController {
         view.addSubview(releaseDateLabel)
         view.addSubview(genreLabel)
         view.addSubview(descriptionTextView)
+        view.addSubview(bottomMarginView)
         // shareButton + favoriteButton in navbar
         navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: favoriteButton), shareButton]
         
@@ -129,6 +135,11 @@ final class MovieDetailViewController: UIViewController {
         descriptionTextView.snp.makeConstraints { make in
             make.top.equalTo(coverImageView.snp.bottom).offset(10)
             make.leading.trailing.bottom.equalTo(view).inset(15)
+        }
+        bottomMarginView.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
+            make.height.greaterThanOrEqualTo(10)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.bottomMargin).offset(-5)
         }
     }
     // load data

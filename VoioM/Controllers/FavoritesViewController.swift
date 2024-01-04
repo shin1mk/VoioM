@@ -56,7 +56,8 @@ final class FavoritesViewController: UIViewController {
         }
         bottomMarginView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview()
-            make.height.equalTo(90)
+            make.height.greaterThanOrEqualTo(10)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.bottomMargin).offset(-5)
         }
     }
     
